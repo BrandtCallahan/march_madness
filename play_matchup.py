@@ -36,23 +36,70 @@ from scipy.stats import norm
 import random
 
 from get_data import *
+from team_dict import *
 
+pd.set_option("future.no_silent_downcasting", True)
 away_tm = "vanderbilt"
 home_tm = "alabama"
 neutral = False
+conf_game = True
 season = 2025
 today = pd.to_datetime("2025-01-20")
 
 
-def matchup(away_tm, home_tm, season, today, neutral, n=501):
+def matchup(away_tm, home_tm, season, today, neutral, conf_game, n=501):
 
     # matchup data
-    h_stats = get_team_stats(season, home_tm)[
-        ["Tm", "Opp", "Date", "Poss", "Off Eff", "Def Eff", "Streak +/-"]
+    h_stats = get_team_stats(season, home_tm, tmname_dict[home_tm])[
+        [
+            "Tm",
+            "Opp",
+            "Home/Away",
+            "Conf Game",
+            "Date",
+            "Poss",
+            "Opp Poss",
+            "Off Eff",
+            "Def Eff",
+            "W/L Flag",
+            "Streak +/-",
+        ]
     ]
-    a_stats = get_team_stats(season, away_tm)[
-        ["Tm", "Opp", "Date", "Poss", "Off Eff", "Def Eff", "Streak +/-"]
+    a_stats = get_team_stats(season, away_tm, tmname_dict[away_tm])[
+        [
+            "Tm",
+            "Opp",
+            "Home/Away",
+            "Conf Game",
+            "Date",
+            "Poss",
+            "Opp Poss",
+            "Off Eff",
+            "Def Eff",
+            "W/L Flag",
+            "Streak +/-",
+        ]
     ]
+
+    # +/- possessions per game
+    h_poss = h_stats[
+        (h_stats["Date"].astype("datetime64[ns]") < today)
+        & (h_stats["Home/Away"] == "Home")
+    ]
+    h_poss = (h_poss["Poss"] - h_poss["Opp Poss"]).mean()
+    h_w_poss = h_stats[
+        (h_stats["Date"].astype("datetime64[ns]") < today) & (h_stats["W/L Flag"])
+    ]
+    h_w_poss = (h_w_poss["Poss"] - h_w_poss["Opp Poss"]).mean()
+    a_poss = a_stats[
+        (a_stats["Date"].astype("datetime64[ns]") < today)
+        & (a_stats["Home/Away"] == "Away")
+    ]
+    a_poss = (a_poss["Poss"] - a_poss["Opp Poss"]).mean()
+    a_w_poss = a_stats[
+        (a_stats["Date"].astype("datetime64[ns]") < today) & (a_stats["W/L Flag"])
+    ]
+    a_w_poss = (a_w_poss["Poss"] - a_w_poss["Opp Poss"]).mean()
 
     # weighted avg. efficiencies
     #   last 5 games (3, 3, 1.5, 1.5, 1)
@@ -91,7 +138,7 @@ def matchup(away_tm, home_tm, season, today, neutral, n=501):
     ) / 10
 
     # Home vs. Away adjustments
-    home_ha = home_away_adj(season, home_tm, today)
+    home_ha = home_away_adj(season, home_tm, today, conf_game)
     if neutral:
         home_ha_off_adj = home_ha[home_ha["Location"] == "Neutral"].reset_index(
             drop=True
@@ -107,7 +154,7 @@ def matchup(away_tm, home_tm, season, today, neutral, n=501):
             "Loc Def Eff"
         ][0]
 
-    away_ha = home_away_adj(season, away_tm, today)
+    away_ha = home_away_adj(season, away_tm, today, conf_game)
     if neutral:
         away_ha_off_adj = away_ha[away_ha["Location"] == "Neutral"].reset_index(
             drop=True
@@ -132,11 +179,11 @@ def matchup(away_tm, home_tm, season, today, neutral, n=501):
     home_streak = home_stats["Streak +/-"][-1:].reset_index(drop=True)[0]
 
     if home_streak >= 3:
-        home_off_stk_adj = home_w_streak["Off Eff"][0]
-        home_def_stk_adj = home_w_streak["Def Eff"][0]
+        home_off_stk_adj = home_w_streak["W Off Eff"][0]
+        home_def_stk_adj = home_w_streak["W Def Eff"][0]
     elif home_streak <= -3:
-        home_off_stk_adj = home_l_streak["Off Eff"][0]
-        home_def_stk_adj = home_l_streak["Def Eff"][0]
+        home_off_stk_adj = home_l_streak["L Off Eff"][0]
+        home_def_stk_adj = home_l_streak["L Def Eff"][0]
     else:
         home_off_stk_adj = 0
         home_def_stk_adj = 0
@@ -148,23 +195,25 @@ def matchup(away_tm, home_tm, season, today, neutral, n=501):
     away_streak = away_stats["Streak +/-"][-1:].reset_index(drop=True)[0]
 
     if away_streak >= 3:
-        away_off_stk_adj = away_w_streak["Off Eff"][0]
-        away_def_stk_adj = away_w_streak["Def Eff"][0]
+        away_off_stk_adj = away_w_streak["W Off Eff"][0]
+        away_def_stk_adj = away_w_streak["W Def Eff"][0]
     elif away_streak <= -3:
-        away_off_stk_adj = away_l_streak["Off Eff"][0]
-        away_def_stk_adj = away_l_streak["Def Eff"][0]
+        away_off_stk_adj = away_l_streak["L Off Eff"][0]
+        away_def_stk_adj = away_l_streak["L Def Eff"][0]
     else:
         away_off_stk_adj = 0
         away_def_stk_adj = 0
 
-    h_tm_off = (home_weight_off + home_off_stk_adj + home_ha_off_adj) - (
-        away_weight_def + away_def_stk_adj + away_ha_def_adj
+    hm_tm_tot = (
+        ((home_weight_off + home_off_stk_adj + home_ha_off_adj))
+        - ((home_weight_def + home_def_stk_adj + home_ha_def_adj))
     )
-    a_tm_off = (away_weight_off + away_off_stk_adj + away_ha_off_adj) - (
-        home_weight_def + home_def_stk_adj + home_ha_def_adj
+    aw_tm_tot = (
+        ((away_weight_off + away_off_stk_adj + away_ha_off_adj))
+        - ((away_weight_def + away_def_stk_adj + away_ha_def_adj))
     )
-    mean = h_tm_off - a_tm_off
-    std = 10
+    mean = (hm_tm_tot / 100 * h_poss) - (aw_tm_tot / 100 * a_poss)
+    std = 5
 
     results_df = pd.DataFrame()
     for i in range(n):
@@ -198,16 +247,21 @@ def matchup(away_tm, home_tm, season, today, neutral, n=501):
     if home_tm_w > away_tm_w:
         game_winner = home_tm
         win_pct = home_tm_w / n
+        pt_diff = (
+            results_df[results_df["winner"] == home_tm]["point_diff"] * h_w_poss
+        ).mean()
     else:
         game_winner = away_tm
         win_pct = away_tm_w / n
-
+        pt_diff = (
+            results_df[results_df["winner"] == away_tm]["point_diff"] * a_w_poss
+        ).mean()
 
     # find average score diff
     point_diff = results_df[results_df["winner"] == game_winner].point_diff.mean()
     true_point_diff = results_df.true_point_diff.mean()
 
-    return [game_winner, point_diff.astype(float), win_pct.astype(float)]
+    return [game_winner, pt_diff.astype(float), win_pct.astype(float)]
 
 
-next_game = matchup(away_tm, home_tm, season, today, neutral, n=501)
+next_game = matchup(away_tm, home_tm, season, today, neutral, conf_game, n=10001)
