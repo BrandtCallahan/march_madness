@@ -10,50 +10,20 @@ Python Predictive Model imports
 """
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import seaborn as sns
 from logzero import logger
-from sklearn import model_selection
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression, Lasso, Ridge
-from sklearn.ensemble import (
-    GradientBoostingRegressor,
-    AdaBoostRegressor,
-    BaggingRegressor,
-    RandomForestRegressor,
-    VotingRegressor,
-    ExtraTreesRegressor,
-)
-from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
-from sklearn.metrics import (
-    r2_score,
-    accuracy_score,
-    precision_score,
-    recall_score,
-    mean_absolute_percentage_error,
-    mean_squared_error,
-)
-from sklearn.model_selection import GridSearchCV
 from math import sqrt
 from tqdm import tqdm
 
 from webscrape_utils import (
     findTables,
     pullTable,
-    # get_game_matchups,
-    # get_game_lineups,
-    # get_game_gambling,
 )
 from team_dict import *
 
 """
 Team stats by game
 """
-season_year = 2025
-team = "vanderbilt"
-team_url = reference_dict[team]
-team_name = tmname_dict[team]
 
 
 def get_team_stats(season_year, team_url, team_name):
@@ -391,6 +361,140 @@ def home_away_adj(season_year, team, today_date, conf_game):
     return location_df
 
 
-"""
-Can we build our own ranking system?
-"""
+
+def tm_rating(season_year, today):
+
+    # read out gamelog
+    team_gamelog = pd.read_csv(
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv"
+    )
+    # only games less than "today"
+    team_gamelog = team_gamelog[(team_gamelog["Date"].astype("datetime64[ns]") < today)]
+
+    # friendly win/loss
+    team_gamelog.loc[team_gamelog["W/L"].str.contains("W"), "W/L Flag"] = True
+    team_gamelog["W/L Flag"] = team_gamelog["W/L Flag"].fillna(False)
+
+    team_gamelog["W/L"] = team_gamelog["W/L"].str[0]
+
+    # running sum W
+    team_gamelog["Total W"] = (
+        team_gamelog["W/L Flag"].cumsum().replace({True: 1, False: 0})
+    )
+    team_gamelog["Total W%"] = team_gamelog["Total W"] / team_gamelog["G"].astype(int)
+
+    # possessions
+    team_gamelog["Poss"] = (
+        team_gamelog["FGA"].astype(int)
+        + (0.44 * team_gamelog["FTA"].astype(int))
+        - team_gamelog["ORB"].astype(int)
+        + team_gamelog["TOV"].astype(int)
+    )
+    team_gamelog["Poss Ext"] = (
+        team_gamelog["FGA"].astype(int)
+        + (0.4 * team_gamelog["FTA"].astype(int))
+        - (
+            1.07
+            * (
+                team_gamelog["ORB"].astype(int)
+                / (
+                    team_gamelog["ORB"].astype(int)
+                    + (
+                        team_gamelog["Opp TRB"].astype(int)
+                        - team_gamelog["Opp ORB"].astype(int)
+                    )
+                )
+            )
+        )
+        * (team_gamelog["FGA"].astype(int) - team_gamelog["FG"].astype(int))
+        + team_gamelog["TOV"].astype(int)
+    )
+    team_gamelog["Opp Poss"] = (
+        team_gamelog["Opp FGA"].astype(int)
+        + (0.44 * team_gamelog["Opp FTA"].astype(int))
+        - team_gamelog["Opp ORB"].astype(int)
+        + team_gamelog["Opp TOV"].astype(int)
+    )
+    team_gamelog["Opp Poss Ext"] = (
+        team_gamelog["Opp FGA"].astype(int)
+        + (0.4 * (team_gamelog["Opp FTA"].astype(int)))
+        - (
+            1.07
+            * (team_gamelog["Opp ORB"].astype(int))
+            / (
+                team_gamelog["Opp ORB"].astype(int)
+                + (team_gamelog["TRB"].astype(int) - team_gamelog["ORB"].astype(int))
+            )
+        )
+        * (team_gamelog["Opp FGA"].astype(int) - team_gamelog["Opp FG"].astype(int))
+        + team_gamelog["Opp TOV"].astype(int)
+    )
+
+    # offense ratings
+    team_gamelog["Off Eff"] = (
+        team_gamelog["Tm Score"].astype(int) / team_gamelog["Poss Ext"]
+    ) * 100
+    team_gamelog["Shoot Eff"] = (
+        team_gamelog["FG"].astype(int) + (0.5 * team_gamelog["3P"].astype(int))
+    ) / team_gamelog["FGA"].astype(int)
+    team_gamelog["AST TOV Eff"] = team_gamelog["AST"].astype(int) / team_gamelog[
+        "TOV"
+    ].astype(int)
+
+    # defense ratings
+    team_gamelog["Def Eff"] = (
+        team_gamelog["Opp Score"].astype(int) / team_gamelog["Opp Poss Ext"]
+    ) * 100
+    team_gamelog["Opp Shoot Eff"] = (
+        team_gamelog["Opp FG"].astype(int) + (0.5 * team_gamelog["Opp 3P"].astype(int))
+    ) / team_gamelog["Opp FGA"].astype(int)
+    team_gamelog["Opp AST TOV Eff"] = team_gamelog["Opp AST"].astype(
+        int
+    ) / team_gamelog["Opp TOV"].astype(int)
+
+    # margin of victory
+    team_gamelog["Margin Victory"] = team_gamelog["Tm Score"].astype(
+        int
+    ) - team_gamelog["Opp Score"].astype(int)
+
+    # tm W %
+    team_w = team_gamelog.copy()
+    team_w.loc[team_w['W/L'].str.contains('W'), 'W'] = 1
+    team_w.loc[team_w['W/L'].str.contains('L'), 'L'] = 1
+    team_w = team_w.groupby(['Tm'], observed=True).agg(W=('W', 'sum'), L=('L', 'sum'), OppCt=('Opp', 'count')).reset_index()
+    team_w['W Pct'] = team_w['W'] / team_w['OppCt']
+
+    team = get_teamnm()
+
+    team_w = team_w.merge(team, how='left', left_on='Tm', right_on='Tm Name')
+
+    # join opp w pct back to gamelog
+    team_df = team_gamelog.merge(team_w[["Gamelog Name", "W Pct"]].rename(columns={'W Pct':'Opp W Pct'}), how='left', left_on='Opp', right_on='Gamelog Name')
+
+    # group by Tm (average)
+    tm_df = (
+        team_df.groupby(["Tm"], observed=True)
+        .agg(
+            OffEff=("Off Eff", "mean"),
+            DefEff=("Def Eff", "mean"),
+            OppWpct=("Opp W Pct", "mean"),
+        )
+        .reset_index()
+    )
+
+    # rank order (Off Eff, Def Eff, Opp W %)
+    tm_df["Off Eff Rnk"] = tm_df["OffEff"].rank(method="max", ascending=True)
+    tm_df["Def Eff Rnk"] = tm_df["DefEff"].rank(method="max", ascending=False)
+    tm_df["Opp W Rnk"] = tm_df["OppWpct"].rank(method="max", ascending=True)
+
+    # divide by max to get 'Ranking Points'
+    tm_df['Off Eff Pts'] = tm_df['Off Eff Rnk'] / tm_df['Off Eff Rnk'].max()
+    tm_df["Def Eff Pts"] = tm_df["Def Eff Rnk"] / tm_df["Def Eff Rnk"].max()
+    tm_df["Opp W Pts"] = tm_df["Opp W Rnk"] / tm_df["Opp W Rnk"].max()
+
+    # Ratings
+    tm_df['Tm Rating'] = ((tm_df['Off Eff Pts']*1.35) + (tm_df["Def Eff Pts"]*1.45) + (tm_df['Opp W Pts']*1.2)) / 4
+    tm_df["Tm Rating"] = (tm_df['Tm Rating'].apply(lambda x: (x-tm_df['Tm Rating'].min()) / (tm_df["Tm Rating"].max() - tm_df["Tm Rating"].min()) * 100))
+    tm_df["Tm Rank"] = tm_df["Tm Rating"].rank(method="max", ascending=False)
+
+    return tm_df
