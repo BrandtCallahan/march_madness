@@ -7,17 +7,17 @@ from team_dict import *
 
 def bracketology(season_year):
     bracket_df = pd.read_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season_bracketology.csv"
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season_bracketology.csv"
     )
 
     bracket_df = bracket_df[bracket_df["season"] == season_year]
 
     return bracket_df
 
-
-def play_in_games():
-    winners = []
-    return winners
+## Need to add this feature
+# def play_in_games():
+#     winners = []
+#     return winners
 
 
 def round_64(season_year, today, tm_df, n):
