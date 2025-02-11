@@ -1,35 +1,8 @@
 from datetime import datetime
 import os
-
-"""
-Python Predictive Model imports
-"""
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
-from sklearn import model_selection
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression, Lasso, Ridge
-from sklearn.ensemble import (
-    GradientBoostingRegressor,
-    AdaBoostRegressor,
-    BaggingRegressor,
-    RandomForestRegressor,
-    VotingRegressor,
-    ExtraTreesRegressor,
-)
-from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
-from sklearn.metrics import (
-    r2_score,
-    accuracy_score,
-    precision_score,
-    recall_score,
-    mean_absolute_percentage_error,
-    mean_squared_error,
-)
-from sklearn.model_selection import GridSearchCV
+from logzero import logger
 from math import sqrt
 from tqdm import tqdm
 from scipy.stats import norm
@@ -40,7 +13,7 @@ from team_dict import *
 
 pd.set_option("future.no_silent_downcasting", True)
 
-def matchup(away_tm, home_tm, season, today, neutral, conf_game, n=501):
+def matchup(away_tm, home_tm, season, today, tm_df, neutral, conf_game, n=1):
 
     team_df = get_teamnm()
     home_url = team_df[team_df["Tm Name"] == home_tm]["Ref Name"].reset_index(
