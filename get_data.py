@@ -10,50 +10,20 @@ Python Predictive Model imports
 """
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 import seaborn as sns
 from logzero import logger
-from sklearn import model_selection
-from sklearn.linear_model import LogisticRegression
-from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression, Lasso, Ridge
-from sklearn.ensemble import (
-    GradientBoostingRegressor,
-    AdaBoostRegressor,
-    BaggingRegressor,
-    RandomForestRegressor,
-    VotingRegressor,
-    ExtraTreesRegressor,
-)
-from sklearn.tree import DecisionTreeRegressor, ExtraTreeRegressor
-from sklearn.metrics import (
-    r2_score,
-    accuracy_score,
-    precision_score,
-    recall_score,
-    mean_absolute_percentage_error,
-    mean_squared_error,
-)
-from sklearn.model_selection import GridSearchCV
 from math import sqrt
 from tqdm import tqdm
 
 from webscrape_utils import (
     findTables,
     pullTable,
-    # get_game_matchups,
-    # get_game_lineups,
-    # get_game_gambling,
 )
 from team_dict import *
 
 """
 Team stats by game
 """
-# season_year = 2025
-# team = "vanderbilt"
-# team_url = reference_dict[team]
-# team_name = tmname_dict[team]
 
 
 def get_team_stats(season_year, team_url, team_name):
@@ -391,11 +361,12 @@ def home_away_adj(season_year, team, today_date, conf_game):
     return location_df
 
 
+
 def tm_rating(season_year, today):
 
     # read out gamelog
     team_gamelog = pd.read_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/season{season_year}_tm_boxscores.csv"
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv"
     )
     # only games less than "today"
     team_gamelog = team_gamelog[(team_gamelog["Date"].astype("datetime64[ns]") < today)]
@@ -486,99 +457,19 @@ def tm_rating(season_year, today):
         int
     ) - team_gamelog["Opp Score"].astype(int)
 
-    # opponent win %
-    #   Can we also rank by opponent rank??
-    opp_w = pd.DataFrame()
-    for n, opp_tm in enumerate(team_gamelog["Opp"].to_list()):
-        # print(opp_tm)
-        logger.info(f"Game {n+1} of {len(team_gamelog["Opp"].to_list())}")
+    # tm W %
+    team_w = team_gamelog.copy()
+    team_w.loc[team_w['W/L'].str.contains('W'), 'W'] = 1
+    team_w.loc[team_w['W/L'].str.contains('L'), 'L'] = 1
+    team_w = team_w.groupby(['Tm'], observed=True).agg(W=('W', 'sum'), L=('L', 'sum'), OppCt=('Opp', 'count')).reset_index()
+    team_w['W Pct'] = team_w['W'] / team_w['OppCt']
 
-        # manually adjust tm names
-        if opp_tm == "USC Upstate":
-            opp_tmnm = "South Carolina Upstate"
-        elif opp_tm == "UConn":
-            opp_tmnm = "Connecticut"
-        elif opp_tm == "Arkansas-Pine Bluff":
-            opp_tmnm = "Arkansas-Pine-Bluff"
-        elif opp_tm == "USC":
-            opp_tmnm = "Southern California"
-        elif opp_tm == "Pitt":
-            opp_tmnm == "Pittsburgh"
-        elif opp_tm == "Southern Miss":
-            opp_tmnm = "Southern Mississippi"
-        elif opp_tm == "UT-Martin":
-            opp_tmnm = "Tennessee-Martin"
-        elif opp_tm == "VCU":
-            opp_tmnm = "Virginia Commonwealth"
-        elif opp_tm == "Penn":
-            opp_tmnm = "Pennsylvania"
-        elif opp_tm == "St. Joseph's":
-            opp_tmnm = "Saint Joseph's"
-        elif opp_tm == "SIU-Edwardsville":
-            opp_tmnm = "Southern Illinois-Edwardsville"
-        elif opp_tm == "VMI":
-            opp_tmnm = "Virginia Military Institute"
-        elif opp_tm == "SMU":
-            opp_tmnm = "Southern Methodist"
-        elif opp_tm == "UC-San Diego":
-            opp_tmnm = "UC San Diego"
-        elif opp_tm == "UC-Davis":
-            opp_tmnm = "UC Davis"
-        elif opp_tm == "UC-Irvine":
-            opp_tmnm = "UC Irvine"
-        elif opp_tm == "UC-Riverside":
-            opp_tmnm = "UC Riverside"
-        elif opp_tm == "UNLV":
-            opp_tmnm = "Nevada-Las Vegas"
-        elif opp_tm == "UIC":
-            opp_tmnm = "Illinois-Chicago"
-        elif opp_tm == "UMass":
-            opp_tmnm = "Massachusetts"
-        elif opp_tm == "St. Peter's":
-            opp_tmnm = "Saint Peter's"
-        elif opp_tm == "UCSB":
-            opp_tmnm = "UC Santa Barbara"
-        elif opp_tm == "LIU":
-            opp_tmnm = "Long Island University"
-        elif opp_tm == "Central Connecticut":
-            opp_tmnm = "Central Connecticut State"
-        elif opp_tm == "UMBC":
-            opp_tmnm = "Maryland-Baltimore County"
-        elif opp_tm == "UMass-Lowell":
-            opp_tmnm = "Massachusetts-Lowell"
-        elif opp_tm == "IU Indianapolis":
-            opp_tmnm = "IU Indy"
-        elif opp_tm == "ETSU":
-            opp_tmnm = "East Tennessee State"
-        else:
-            opp_tmnm = opp_tm
+    team = get_teamnm()
 
-        # get opponent W's
-        opp_gamelog = pd.read_csv(
-            f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/season{season_year}_tm_boxscores.csv"
-        )
-        opp_gamelog = opp_gamelog[
-            (opp_gamelog["Tm"] == opp_tmnm)
-            & (
-                (opp_gamelog["Date"].astype("datetime64[ns]"))
-                < pd.to_datetime(today).strftime("%Y-%m-%d")
-            )
-        ]
-
-        opp_wins = opp_gamelog[(opp_gamelog["W/L"].str.contains("W"))]["W/L"].count()
-        opp_losses = opp_gamelog[(opp_gamelog["W/L"].str.contains("L"))]["W/L"].count()
-        opp_w_pct = opp_wins / (opp_wins + opp_losses)
-
-        opp_w = pd.concat(
-            [opp_w, pd.DataFrame(data={"Opp": [opp_tm], "Opp W Pct": [opp_w_pct]})]
-        ).reset_index(drop=True)
+    team_w = team_w.merge(team, how='left', left_on='Tm', right_on='Tm Name')
 
     # join opp w pct back to gamelog
-    # team_df = team_gamelog.merge(opp_w, how="inner", on="Opp", validate="1:1")
-    # can't merge because you can play a team multiple times (merge on more than just tm name is likely needed)
-    team_df = pd.concat(
-        [team_gamelog.reset_index(drop=True), opp_w[["Opp W Pct"]]], axis=1
-    )
+    team_df = team_gamelog.merge(team_w[["Gamelog Name", "W Pct"]].rename(columns={'W Pct':'Opp W Pct'}), how='left', left_on='Opp', right_on='Gamelog Name')
 
     # group by Tm (average)
     tm_df = (
@@ -602,7 +493,7 @@ def tm_rating(season_year, today):
     tm_df["Opp W Pts"] = tm_df["Opp W Rnk"] / tm_df["Opp W Rnk"].max()
 
     # Ratings
-    tm_df['Tm Rating'] = ((tm_df['Off Eff Pts']*1.3) + (tm_df["Def Eff Pts"]*1.45) + (tm_df['Opp W Pts']*1.25)) / 4
+    tm_df['Tm Rating'] = ((tm_df['Off Eff Pts']*1.35) + (tm_df["Def Eff Pts"]*1.45) + (tm_df['Opp W Pts']*1.2)) / 4
     tm_df["Tm Rating"] = (tm_df['Tm Rating'].apply(lambda x: (x-tm_df['Tm Rating'].min()) / (tm_df["Tm Rating"].max() - tm_df["Tm Rating"].min()) * 100))
     tm_df["Tm Rank"] = tm_df["Tm Rating"].rank(method="max", ascending=False)
 
