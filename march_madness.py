@@ -7,8 +7,6 @@ from get_data import *
 
 def march_madness(season, today, n):
 
-    # will pull all gamelogs from season and apply Opponent W %
-    #   WARNING: will pull a lot of games
     tm_df = tm_rating(season, today)
     mm_bracket = bracketology(season)[["season", "region", "seed", "tm"]]
 
@@ -90,7 +88,7 @@ def march_madness(season, today, n):
 
         results += [r2["Gm Winner"][0]]
 
-        value_counts = pd.Series([item for item in results]).value_counts()
+        # value_counts = pd.Series([item for item in results]).value_counts()
         # print(value_counts)
 
     bracket_results = (
