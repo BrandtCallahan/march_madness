@@ -1,0 +1,380 @@
+Season,Tm Name,Ref Name,Conference,Conference Abbr
+2025,Alabama,alabama,Southeastern Conference,SEC
+2025,Arkansas,arkansas,Southeastern Conference,SEC
+2025,Auburn,auburn,Southeastern Conference,SEC
+2025,Florida,florida,Southeastern Conference,SEC
+2025,Georgia,georgia,Southeastern Conference,SEC
+2025,Kentucky,kentucky,Southeastern Conference,SEC
+2025,LSU,louisiana-state,Southeastern Conference,SEC
+2025,Ole Miss,mississippi,Southeastern Conference,SEC
+2025,Mississippi State,mississippi-state,Southeastern Conference,SEC
+2025,Missouri,missouri,Southeastern Conference,SEC
+2025,Oklahoma,oklahoma,Southeastern Conference,SEC
+2025,South Carolina,south-carolina,Southeastern Conference,SEC
+2025,Tennessee,tennessee,Southeastern Conference,SEC
+2025,Texas,texas,Southeastern Conference,SEC
+2025,Texas A&M,texas-am,Southeastern Conference,SEC
+2025,Vanderbilt,vanderbilt,Southeastern Conference,SEC
+2024,Duquesne,duquesne,Atlantic 10 Conference,A10
+2024,Dayton,dayton,Atlantic 10 Conference,A10
+2024,Loyola (IL),loyola-il,Atlantic 10 Conference,A10
+2024,Richmond,richmond,Atlantic 10 Conference,A10
+2024,Massachusetts,massachusetts,Atlantic 10 Conference,A10
+2024,Virginia Commonwealth,virginia-commonwealth,Atlantic 10 Conference,A10
+2024,George Mason,george-mason,Atlantic 10 Conference,A10
+2024,St. Bonaventure,st-bonaventure,Atlantic 10 Conference,A10
+2024,Saint Joseph's,saint-josephs,Atlantic 10 Conference,A10
+2024,La Salle,la-salle,Atlantic 10 Conference,A10
+2024,Fordham,fordham,Atlantic 10 Conference,A10
+2024,Rhode Island,rhode-island,Atlantic 10 Conference,A10
+2024,Davidson,davidson,Atlantic 10 Conference,A10
+2024,Saint Louis,saint-louis,Atlantic 10 Conference,A10
+2024,George Washington,george-washington,Atlantic 10 Conference,A10
+2024,Florida Atlantic,florida-atlantic,American Athletic Conference,AAC
+2024,UAB,alabama-birmingham,American Athletic Conference,AAC
+2024,South Florida,south-florida,American Athletic Conference,AAC
+2024,Charlotte,charlotte,American Athletic Conference,AAC
+2024,Memphis,memphis,American Athletic Conference,AAC
+2024,Southern Methodist,southern-methodist,American Athletic Conference,AAC
+2024,North Texas,north-texas,American Athletic Conference,AAC
+2024,Tulsa,tulsa,American Athletic Conference,AAC
+2024,East Carolina,east-carolina,American Athletic Conference,AAC
+2024,Tulane,tulane,American Athletic Conference,AAC
+2024,Temple,temple,American Athletic Conference,AAC
+2024,Wichita State,wichita-state,American Athletic Conference,AAC
+2024,Rice,rice,American Athletic Conference,AAC
+2024,UTSA,texas-san-antonio,American Athletic Conference,AAC
+2024,North Carolina,north-carolina,Atlantic Coast Conference,ACC
+2024,Clemson,clemson,Atlantic Coast Conference,ACC
+2024,Duke,duke,Atlantic Coast Conference,ACC
+2024,NC State,north-carolina-state,Atlantic Coast Conference,ACC
+2024,Virginia,virginia,Atlantic Coast Conference,ACC
+2024,Pittsburgh,pittsburgh,Atlantic Coast Conference,ACC
+2024,Clemson,clemson,Atlantic Coast Conference,ACC
+2024,Syracuse,syracuse,Atlantic Coast Conference,ACC
+2024,Wake Forest,wake-forest,Atlantic Coast Conference,ACC
+2024,Virginia Tech,virginia-tech,Atlantic Coast Conference,ACC
+2024,Florida State,florida-state,Atlantic Coast Conference,ACC
+2024,Boston College,boston-college,Atlantic Coast Conference,ACC
+2024,Georgia Tech,georgia-tech,Atlantic Coast Conference,ACC
+2024,Notre Dame,notre-dame,Atlantic Coast Conference,ACC
+2024,Miami (FL),miami-fl,Atlantic Coast Conference,ACC
+2024,Louisville,louisville,Atlantic Coast Conference,ACC
+2024,Vermont,vermont,America East Conference,AEC
+2024,Massachusetts-Lowell,massachusetts-lowell,America East Conference,AEC
+2024,Bryant,bryant,America East Conference,AEC
+2024,New Hampshire,new-hampshire,America East Conference,AEC
+2024,Binghamton,binghamton,America East Conference,AEC
+2024,Maine,maine,America East Conference,AEC
+2024,Maryland-Baltimore County,maryland-baltimore-county,America East Conference,AEC
+2024,Albany (NY),albany-ny,America East Conference,AEC
+2024,NJIT,njit,America East Conference,AEC
+2024,Stetson,stetson,Atlantic Sun Conference,ASun
+2024,Eastern Kentucky,eastern-kentucky,Atlantic Sun Conference,ASun
+2024,Lipscomb,lipscomb,Atlantic Sun Conference,ASun
+2024,Austin Peay,austin-peay,Atlantic Sun Conference,ASun
+2024,North Florida,north-florida,Atlantic Sun Conference,ASun
+2024,North Alabama,north-alabama,Atlantic Sun Conference,ASun
+2024,Florida Gulf Coast,florida-gulf-coast,Atlantic Sun Conference,ASun
+2024,Queens (NC),queens-nc,Atlantic Sun Conference,ASun
+2024,Kennesaw State,kennesaw-state,Atlantic Sun Conference,ASun
+2024,Jacksonville,jacksonville,Atlantic Sun Conference,ASun
+2024,Central Arkansas,central-arkansas,Atlantic Sun Conference,ASun
+2024,Bellarmine,bellarmine,Atlantic Sun Conference,ASun
+2024,Oklahoma,oklahoma,Big 12,Big 12
+2024,Texas,texas,Big 12,Big 12
+2024,Iowa State,iowa-state,Big 12,Big 12
+2024,BYU,brigham-young,Big 12,Big 12
+2024,Baylor,baylor,Big 12,Big 12
+2024,Houston,houston,Big 12,Big 12
+2024,Texas Tech,texas-tech,Big 12,Big 12
+2024,Kansas,kansas,Big 12,Big 12
+2024,TCU,texas-christian,Big 12,Big 12
+2024,West Virginia,west-virginia,Big 12,Big 12
+2024,Oklahoma State,oklahoma-state,Big 12,Big 12
+2024,UCF,central-florida,Big 12,Big 12
+2024,Cincinnati,cincinnati,Big 12,Big 12
+2024,Kansas State,kansas-state,Big 12,Big 12
+2024,Connecticut,connecticut,Big East Conference,Big East
+2024,Marquette,marquette,Big East Conference,Big East
+2024,Creighton,creighton,Big East Conference,Big East
+2024,Seton Hall,seton-hall,Big East Conference,Big East
+2024,St. John's (NY),st-johns-ny,Big East Conference,Big East
+2024,Providence,providence,Big East Conference,Big East
+2024,Villanova,villanova,Big East Conference,Big East
+2024,Butler,butler,Big East Conference,Big East
+2024,Xavier,xavier,Big East Conference,Big East
+2024,Georgetown,georgetown,Big East Conference,Big East
+2024,DePaul,depaul,Big East Conference,Big East
+2024,Eastern Washington,eastern-washington,Big Sky Conference,Big Sky
+2024,Montana,montana,Big Sky Conference,Big Sky
+2024,Northern Colorado,northern-colorado,Big Sky Conference,Big Sky
+2024,Weber State,weber-state,Big Sky Conference,Big Sky
+2024,Montana State,montana-state,Big Sky Conference,Big Sky
+2024,Portland State,portland-state,Big Sky Conference,Big Sky
+2024,Northern Arizona,northern-arizona,Big Sky Conference,Big Sky
+2024,Idaho State,idaho-state,Big Sky Conference,Big Sky
+2024,Idaho,idaho,Big Sky Conference,Big Sky
+2024,Sacramento State,sacramento-state,Big Sky Conference,Big Sky
+2024,Longwood,longwood,Big South Conference,Big South
+2024,High Point,high-point,Big South Conference,Big South
+2024,UNC Asheville,north-carolina-asheville,Big South Conference,Big South
+2024,Gardner-Webb,gardner-webb,Big South Conference,Big South
+2024,Winthrop,winthrop,Big South Conference,Big South
+2024,Presbyterian,presbyterian,Big South Conference,Big South
+2024,Charleston Southern,charleston-southern,Big South Conference,Big South
+2024,Radford,radford,Big South Conference,Big South
+2024,South Carolina Upstate,south-carolina-upstate,Big South Conference,Big South
+2024,Illinois,illinois,Big Ten,Big Ten
+2024,Northwestern,northwestern,Big Ten,Big Ten
+2024,Michigan State,michigan-state,Big Ten,Big Ten
+2024,Wisconsin,wisconsin,Big Ten,Big Ten
+2024,Nebraska,nebraska,Big Ten,Big Ten
+2024,Purdue,purdue,Big Ten,Big Ten
+2024,Indiana,indiana,Big Ten,Big Ten
+2024,Iowa,iowa,Big Ten,Big Ten
+2024,Ohio State,ohio-state,Big Ten,Big Ten
+2024,Minnesota,minnesota,Big Ten,Big Ten
+2024,Penn State,penn-state,Big Ten,Big Ten
+2024,Maryland,maryland,Big Ten,Big Ten
+2024,Rutgers,rutgers,Big Ten,Big Ten
+2024,Michigan,michigan,Big Ten,Big Ten
+2024,Long Beach State,long-beach-state,Big West Conference,Big West
+2024,UC Irvine,california-irvine,Big West Conference,Big West
+2024,UC San Diego,california-san-diego,Big West Conference,Big West
+2024,UC Davis,california-davis,Big West Conference,Big West
+2024,Hawaii,hawaii,Big West Conference,Big West
+2024,UC Riverside,california-riverside,Big West Conference,Big West
+2024,Cal State Northridge,cal-state-northridge,Big West Conference,Big West
+2024,UC Santa Barbara,california-santa-barbara,Big West Conference,Big West
+2024,Cal State Bakersfield,cal-state-bakersfield,Big West Conference,Big West
+2024,Cal State Fullerton,cal-state-fullerton,Big West Conference,Big West
+2024,Cal Poly,cal-poly,Big West Conference,Big West
+2024,College of Charleston,college-of-charleston,Coastal Athletic Association,CAA
+2024,Drexel,drexel,Coastal Athletic Association,CAA
+2024,UNC Wilmington,north-carolina-wilmington,Coastal Athletic Association,CAA
+2024,Hofstra,hofstra,Coastal Athletic Association,CAA
+2024,Towson,towson,Coastal Athletic Association,CAA
+2024,Delaware,delaware,Coastal Athletic Association,CAA
+2024,Stony Brook,stony-brook,Coastal Athletic Association,CAA
+2024,Monmouth,monmouth,Coastal Athletic Association,CAA
+2024,Campbell,campbell,Coastal Athletic Association,CAA
+2024,Northeastern,northeastern,Coastal Athletic Association,CAA
+2024,Elon,elon,Coastal Athletic Association,CAA
+2024,North Carolina A&T,north-carolina-at,Coastal Athletic Association,CAA
+2024,William & Mary,william-mary,Coastal Athletic Association,CAA
+2024,Hampton,hampton,Coastal Athletic Association,CAA
+2024,Western Kentucky,western-kentucky,Conference USA,CUSA
+2024,Sam Houston,sam-houston-state,Conference USA,CUSA
+2024,Louisiana Tech,louisiana-tech,Conference USA,CUSA
+2024,Liberty,liberty,Conference USA,CUSA
+2024,UTEP,texas-el-paso,Conference USA,CUSA
+2024,Middle Tennessee,middle-tennessee,Conference USA,CUSA
+2024,New Mexico State,new-mexico-state,Conference USA,CUSA
+2024,Jacksonville State,jacksonville-state,Conference USA,CUSA
+2024,Florida International,florida-international,Conference USA,CUSA
+2024,Oakland,oakland,Horizon League,Horizon
+2024,Youngstown State,youngstown-state,Horizon League,Horizon
+2024,Green Bay,green-bay,Horizon League,Horizon
+2024,Wright State,wright-state,Horizon League,Horizon
+2024,Milwaukee,milwaukee,Horizon League,Horizon
+2024,Northern Kentucky,northern-kentucky,Horizon League,Horizon
+2024,Purdue Fort Wayne,ipfw,Horizon League,Horizon
+2024,Cleveland State,cleveland-state,Horizon League,Horizon
+2024,Robert Morris,robert-morris,Horizon League,Horizon
+2024,IU Indy,iupui,Horizon League,Horizon
+2024,Detroit Mercy,detroit-mercy,Horizon League,Horizon
+2024,Chicago State,chicago-state,Independent,Independent
+2024,Yale,yale,Ivy League,Ivy
+2024,Princeton,princeton,Ivy League,Ivy
+2024,Cornell,cornell,Ivy League,Ivy
+2024,Brown,brown,Ivy League,Ivy
+2024,Harvard,harvard,Ivy League,Ivy
+2024,Columbia,columbia,Ivy League,Ivy
+2024,Pennsylvania,pennsylvania,Ivy League,Ivy
+2024,Dartmouth,dartmouth,Ivy League,Ivy
+2024,Saint Peter's,saint-peters,Metro Atlantic Athletic Conference,MAAC
+2024,Quinnipiac,quinnipiac,Metro Atlantic Athletic Conference,MAAC
+2024,Fairfield,fairfield,Metro Atlantic Athletic Conference,MAAC
+2024,Marist,marist,Metro Atlantic Athletic Conference,MAAC
+2024,Rider,rider,Metro Atlantic Athletic Conference,MAAC
+2024,Niagara,niagara,Metro Atlantic Athletic Conference,MAAC
+2024,Iona,iona,Metro Atlantic Athletic Conference,MAAC
+2024,Mount St. Mary's,mount-st-marys,Metro Atlantic Athletic Conference,MAAC
+2024,Canisius,canisius,Metro Atlantic Athletic Conference,MAAC
+2024,Manhattan,manhattan,Metro Atlantic Athletic Conference,MAAC
+2024,Siena,siena,Metro Atlantic Athletic Conference,MAAC
+2024,Akron,akron,Mid-American Conference,MAC
+2024,Toledo,toledo,Mid-American Conference,MAC
+2024,Ohio,ohio,Mid-American Conference,MAC
+2024,Central Michigan,central-michigan,Mid-American Conference,MAC
+2024,Bowling Green State,bowling-green-state,Mid-American Conference,MAC
+2024,Miami (OH),miami-oh,Mid-American Conference,MAC
+2024,Western Michigan,western-michigan,Mid-American Conference,MAC
+2024,Kent State,kent-state,Mid-American Conference,MAC
+2024,Ball State,ball-state,Mid-American Conference,MAC
+2024,Eastern Michigan,eastern-michigan,Mid-American Conference,MAC
+2024,Northern Illinois,northern-illinois,Mid-American Conference,MAC
+2024,Buffalo,buffalo,Mid-American Conference,MAC
+2024,Norfolk State,norfolk-state,Mid-Eastern Athletic Conference,MEAC
+2024,North Carolina Central,north-carolina-central,Mid-Eastern Athletic Conference,MEAC
+2024,Howard,howard,Mid-Eastern Athletic Conference,MEAC
+2024,South Carolina State,south-carolina-state,Mid-Eastern Athletic Conference,MEAC
+2024,Morgan State,morgan-state,Mid-Eastern Athletic Conference,MEAC
+2024,Delaware State,delaware-state,Mid-Eastern Athletic Conference,MEAC
+2024,Maryland-Eastern Shore,maryland-eastern-shore,Mid-Eastern Athletic Conference,MEAC
+2024,Coppin State,coppin-state,Mid-Eastern Athletic Conference,MEAC
+2024,Drake,drake,Missouri Valley Conference,MVC
+2024,Indiana State,indiana-state,Missouri Valley Conference,MVC
+2024,Bradley,bradley,Missouri Valley Conference,MVC
+2024,Belmont,belmont,Missouri Valley Conference,MVC
+2024,Northern Iowa,northern-iowa,Missouri Valley Conference,MVC
+2024,Southern Illinois,southern-illinois,Missouri Valley Conference,MVC
+2024,Illinois State,illinois-state,Missouri Valley Conference,MVC
+2024,Murray State,murray-state,Missouri Valley Conference,MVC
+2024,Missouri State,missouri-state,Missouri Valley Conference,MVC
+2024,Evansville,evansville,Missouri Valley Conference,MVC
+2024,Illinois-Chicago,illinois-chicago,Missouri Valley Conference,MVC
+2024,Valparaiso,valparaiso,Missouri Valley Conference,MVC
+2024,San Diego State,san-diego-state,Mountain West Conference,MWC
+2024,Nevada,nevada,Mountain West Conference,MWC
+2024,New Mexico,new-mexico,Mountain West Conference,MWC
+2024,Utah State,utah-state,Mountain West Conference,MWC
+2024,Colorado State,colorado-state,Mountain West Conference,MWC
+2024,Boise State,boise-state,Mountain West Conference,MWC
+2024,Nevada-Las Vegas,nevada-las-vegas,Mountain West Conference,MWC
+2024,Wyoming,wyoming,Mountain West Conference,MWC
+2024,Fresno State,fresno-state,Mountain West Conference,MWC
+2024,Air Force,air-force,Mountain West Conference,MWC
+2024,San Jose State,san-jose-state,Mountain West Conference,MWC
+2024,Wagner,wagner,Northeast Conference,Northeast
+2024,Central Connecticut State,central-connecticut-state,Northeast Conference,Northeast
+2024,Merrimack,merrimack,Northeast Conference,Northeast
+2024,Sacred Heart,sacred-heart,Northeast Conference,Northeast
+2024,FDU,fairleigh-dickinson,Northeast Conference,Northeast
+2024,Le Moyne,le-moyne,Northeast Conference,Northeast
+2024,Long Island University,long-island-university,Northeast Conference,Northeast
+2024,Saint Francis (PA),saint-francis-pa,Northeast Conference,Northeast
+2024,Stonehill,stonehill,Northeast Conference,Northeast
+2024,Morehead State,morehead-state,Ohio Valley Conference,OVC
+2024,Tennessee-Martin,tennessee-martin,Ohio Valley Conference,OVC
+2024,Little Rock,arkansas-little-rock,Ohio Valley Conference,OVC
+2024,Western Illinois,western-illinois,Ohio Valley Conference,OVC
+2024,Tennessee State,tennessee-state,Ohio Valley Conference,OVC
+2024,Southern Illinois-Edwardsville,southern-illinois-edwardsville,Ohio Valley Conference,OVC
+2024,Eastern Illinois,eastern-illinois,Ohio Valley Conference,OVC
+2024,Tennessee Tech,tennessee-tech,Ohio Valley Conference,OVC
+2024,Southern Indiana,southern-indiana,Ohio Valley Conference,OVC
+2024,Southeast Missouri State,southeast-missouri-state,Ohio Valley Conference,OVC
+2024,Lindenwood,lindenwood,Ohio Valley Conference,OVC
+2024,Washington State,washington-state,Pac 12 Confernce,Pac 12
+2024,Arizona,arizona,Pac 12 Confernce,Pac 12
+2024,Colorado,colorado,Pac 12 Confernce,Pac 12
+2024,Oregon,oregon,Pac 12 Confernce,Pac 12
+2024,UCLA,ucla,Pac 12 Confernce,Pac 12
+2024,Utah,utah,Pac 12 Confernce,Pac 12
+2024,Washington,washington,Pac 12 Confernce,Pac 12
+2024,California,california,Pac 12 Confernce,Pac 12
+2024,Southern California,southern-california,Pac 12 Confernce,Pac 12
+2024,Arizona State,arizona-state,Pac 12 Confernce,Pac 12
+2024,Stanford,stanford,Pac 12 Confernce,Pac 12
+2024,Oregon State,oregon-state,Pac 12 Confernce,Pac 12
+2024,Colgate,colgate,Patriot League,Patriot
+2024,American,american,Patriot League,Patriot
+2024,Boston University,boston-university,Patriot League,Patriot
+2024,Bucknell,bucknell,Patriot League,Patriot
+2024,Lafayette,lafayette,Patriot League,Patriot
+2024,Lehigh,lehigh,Patriot League,Patriot
+2024,Navy,navy,Patriot League,Patriot
+2024,Army,army,Patriot League,Patriot
+2024,Holy Cross,holy-cross,Patriot League,Patriot
+2024,Loyola (MD),loyola-md,Patriot League,Patriot
+2024,Alabama,alabama,Southeastern Conference,SEC
+2024,Arkansas,arkansas,Southeastern Conference,SEC
+2024,Auburn,auburn,Southeastern Conference,SEC
+2024,Florida,florida,Southeastern Conference,SEC
+2024,Georgia,georgia,Southeastern Conference,SEC
+2024,Kentucky,kentucky,Southeastern Conference,SEC
+2024,LSU,louisiana-state,Southeastern Conference,SEC
+2024,Ole Miss,mississippi,Southeastern Conference,SEC
+2024,Mississippi State,mississippi-state,Southeastern Conference,SEC
+2024,Missouri,missouri,Southeastern Conference,SEC
+2024,South Carolina,south-carolina,Southeastern Conference,SEC
+2024,Tennessee,tennessee,Southeastern Conference,SEC
+2024,Texas A&M,texas-am,Southeastern Conference,SEC
+2024,Vanderbilt,vanderbilt,Southeastern Conference,SEC
+2024,Samford,samford,Southern Conference,Southern
+2024,UNC Greensboro,north-carolina-greensboro,Southern Conference,Southern
+2024,Chattanooga,chattanooga,Southern Conference,Southern
+2024,Western Carolina,western-carolina,Southern Conference,Southern
+2024,Wofford,wofford,Southern Conference,Southern
+2024,Furman,furman,Southern Conference,Southern
+2024,East Tennessee State,east-tennessee-state,Southern Conference,Southern
+2024,Mercer,mercer,Southern Conference,Southern
+2024,The Citadel,citadel,Southern Conference,Southern
+2024,Virginia Military Institute,virginia-military-institute,Southern Conference,Southern
+2024,McNeese State,mcneese-state,Southland Conference,Southland
+2024,Texas A&M-Corpus Christi,texas-am-corpus-christi,Southland Conference,Southland
+2024,Nicholls State,nicholls-state,Southland Conference,Southland
+2024,Lamar,lamar,Southland Conference,Southland
+2024,Southeastern Louisiana,southeastern-louisiana,Southland Conference,Southland
+2024,Northwestern State,northwestern-state,Southland Conference,Southland
+2024,East Texas A&M,texas-am-commerce,Southland Conference,Southland
+2024,New Orleans,new-orleans,Southland Conference,Southland
+2024,Houston Christian,houston-baptist,Southland Conference,Southland
+2024,Incarnate Word,incarnate-word,Southland Conference,Southland
+2024,South Dakota State,south-dakota-state,Summit League,Summit
+2024,North Dakota,north-dakota,Summit League,Summit
+2024,Kansas City,missouri-kansas-city,Summit League,Summit
+2024,St. Thomas,st-thomas-mn,Summit League,Summit
+2024,North Dakota State,north-dakota-state,Summit League,Summit
+2024,Omaha,nebraska-omaha,Summit League,Summit
+2024,Denver,denver,Summit League,Summit
+2024,Oral Roberts,oral-roberts,Summit League,Summit
+2024,South Dakota,south-dakota,Summit League,Summit
+2024,James Madison,james-madison,Sun Belt Conference,Sun Belt
+2024,Appalachian State,appalachian-state,Sun Belt Conference,Sun Belt
+2024,Troy,troy,Sun Belt Conference,Sun Belt
+2024,Arkansas State,arkansas-state,Sun Belt Conference,Sun Belt
+2024,Louisiana,louisiana-lafayette,Sun Belt Conference,Sun Belt
+2024,Southern Mississippi,southern-mississippi,Sun Belt Conference,Sun Belt
+2024,South Alabama,south-alabama,Sun Belt Conference,Sun Belt
+2024,Georgia State,georgia-state,Sun Belt Conference,Sun Belt
+2024,Georgia Southern,georgia-southern,Sun Belt Conference,Sun Belt
+2024,Texas State,texas-state,Sun Belt Conference,Sun Belt
+2024,Marshall,marshall,Sun Belt Conference,Sun Belt
+2024,Louisiana-Monroe,louisiana-monroe,Sun Belt Conference,Sun Belt
+2024,Coastal Carolina,coastal-carolina,Sun Belt Conference,Sun Belt
+2024,Old Dominion,old-dominion,Sun Belt Conference,Sun Belt
+2024,Grambling,grambling,Southwest Athletic Conference,SWAC
+2024,Alcorn State,alcorn-state,Southwest Athletic Conference,SWAC
+2024,Southern,southern,Southwest Athletic Conference,SWAC
+2024,Texas Southern,texas-southern,Southwest Athletic Conference,SWAC
+2024,Bethune-Cookman,bethune-cookman,Southwest Athletic Conference,SWAC
+2024,Jackson State,jackson-state,Southwest Athletic Conference,SWAC
+2024,Alabama A&M,alabama-am,Southwest Athletic Conference,SWAC
+2024,Arkansas-Pine-Bluff,arkansas-pine-bluff,Southwest Athletic Conference,SWAC
+2024,Prairie View,prairie-view,Southwest Athletic Conference,SWAC
+2024,Alabama State,alabama-state,Southwest Athletic Conference,SWAC
+2024,Florida A&M,florida-am,Southwest Athletic Conference,SWAC
+2024,Mississippi Valley State,mississippi-valley-state,Southwest Athletic Conference,SWAC
+2024,Grand Canyon,grand-canyon,Western Athletic Conference,WAC
+2024,Tarleton State,tarleton-state,Western Athletic Conference,WAC
+2024,UT Arlington,texas-arlington,Western Athletic Conference,WAC
+2024,Seattle,seattle,Western Athletic Conference,WAC
+2024,Utah Valley,utah-valley,Western Athletic Conference,WAC
+2024,Stephen F. Austin,stephen-f-austin,Western Athletic Conference,WAC
+2024,Abilene Christian,abilene-christian,Western Athletic Conference,WAC
+2024,California Baptist,california-baptist,Western Athletic Conference,WAC
+2024,Utah Tech,dixie-state,Western Athletic Conference,WAC
+2024,Southern Utah,southern-utah,Western Athletic Conference,WAC
+2024,Texas-Rio Grande Valley,texas-pan-american,Western Athletic Conference,WAC
+2024,Saint Mary's (CA),saint-marys-ca,West Coast Conference,WCC
+2024,Gonzaga,gonzaga,West Coast Conference,WCC
+2024,San Francisco,san-francisco,West Coast Conference,WCC
+2024,Santa Clara,santa-clara,West Coast Conference,WCC
+2024,San Diego,san-diego,West Coast Conference,WCC
+2024,Pepperdine,pepperdine,West Coast Conference,WCC
+2024,Loyola Marymount,loyola-marymount,West Coast Conference,WCC
+2024,Portland,portland,West Coast Conference,WCC
+2024,Pacific,pacific,West Coast Conference,WCC
