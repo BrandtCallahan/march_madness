@@ -22,8 +22,8 @@ def matchup(away_tm, home_tm, season, today, tm_df, neutral, conf_game, n=1):
     away_url = team_df[team_df["Tm Name"] == away_tm]["Ref Name"].reset_index(
         drop=True
     )[0]
-    hm_rating = tm_df[tm_df['Tm'] == home_tm].reset_index(drop=True)['Tm Rating'][0]
-    aw_rating = tm_df[tm_df["Tm"] == away_tm].reset_index(drop=True)["Tm Rating"][0]
+    hm_rating = tm_df[tm_df['Tm'] == home_tm].reset_index(drop=True)['Net Tm Rating'][0]
+    aw_rating = tm_df[tm_df["Tm"] == away_tm].reset_index(drop=True)["Net Tm Rating"][0]
 
     mean = (hm_rating) - (aw_rating)
     std = 10
@@ -71,4 +71,76 @@ def matchup(away_tm, home_tm, season, today, tm_df, neutral, conf_game, n=1):
     return [game_winner, pt_diff.astype(float), win_pct.astype(float)]
 
 
-# next_game = matchup(away_tm, home_tm, season, today, neutral, conf_game, n=10001)
+def single_matchup(away_tm, home_tm, tm_df, neutral_gm):
+    team_df = get_teamnm()
+    home_url = team_df[team_df["Tm Name"] == home_tm]["Ref Name"].reset_index(
+        drop=True
+    )[0]
+    away_url = team_df[team_df["Tm Name"] == away_tm]["Ref Name"].reset_index(
+        drop=True
+    )[0]
+
+    h_tm = tm_df[tm_df["Tm"] == home_tm].reset_index(drop=True)
+    a_tm = tm_df[tm_df["Tm"] == away_tm].reset_index(drop=True)
+
+    # Game Point Differential
+    if neutral_gm:
+        point_diff = (
+            (a_tm["TmEffAdj"][0] - h_tm["TmEffAdj"][0])
+            * (h_tm["Poss"] + a_tm["Poss"])
+            / 200
+        )[0]
+    else:
+        # Home Court Advantage (Adjustment)
+        point_diff = (
+            (
+                a_tm["TmEffAdj"][0]
+                - (h_tm["TmEffAdj"][0] + (abs(h_tm["TmEffAdj"][0]) * 0.05))
+            )
+            * (h_tm["Poss"] + a_tm["Poss"])
+            / 200
+        )[0]
+
+    sigma, stdev = 10, 10
+    x = 0
+    home_adv = 3.5
+    u, kpEMdiff = point_diff - home_adv, point_diff - home_adv
+
+    # W Probability
+    ## win_prob = 0.5 * (1 + math.erf((x - u) / (sigma * math.sqrt(2))))
+    win_prob = norm.cdf(0, kpEMdiff, stdev)
+
+    game_df = pd.DataFrame(
+        data={
+            "Tm": [away_tm, home_tm],
+            "Win Prob.": [1 - win_prob, win_prob],
+            "Point Diff": [kpEMdiff, kpEMdiff * -1],
+        }
+    ).reset_index(drop=True)
+
+    return game_df
+
+
+def graph_win_prob(away_tm, home_tm, point_diff, win_prob, home_adv, stdev):
+
+    # Graph W Probability
+    x = np.arange(
+        (point_diff - home_adv) - 3.5 * stdev,
+        (point_diff - home_adv) + 3.5 * stdev,
+        0.01,
+    )
+    y = norm.pdf(x, (point_diff - home_adv), stdev)
+    p.plot(x, y, color="k", lw=2)
+    p.fill_between(
+        x, 0, y, where=x >= 0, facecolor="blue", alpha=0.2, label=f"{away_tm} Wins"
+    )
+    p.fill_between(
+        x, 0, y, where=x <= 0, facecolor="red", alpha=0.2, label=f"{home_tm} Wins"
+    )
+    p.axvline((point_diff - home_adv), c="k", ls="--")
+    p.annotate(
+        "{0:5.2f}".format((point_diff - home_adv)),
+        xy=(1.05 * (point_diff - home_adv), 1.04 * y.max()),
+    )
+    p.legend(loc=2)
+    p.show()
