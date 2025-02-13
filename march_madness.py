@@ -35,7 +35,7 @@ def march_madness(season, today, n):
         r32 = round_32(season, today, tm_df, r64, 1)
         r32_arch = pd.concat([r32_arch, r32]).reset_index(drop=True)
         r32_hist = (
-            r64_arch.groupby(["Region", "Gm Winner"], observed=True)
+            r32_arch.groupby(["Region", "Gm Winner"], observed=True)
             .agg(NumW=("Gm Winner", "count"))
             .reset_index()
         )
@@ -46,7 +46,7 @@ def march_madness(season, today, n):
         r16 = sweet_16(season, today, tm_df, r32, 1)
         r16_arch = pd.concat([r16_arch, r16]).reset_index(drop=True)
         r16_hist = (
-            r64_arch.groupby(["Region", "Gm Winner"], observed=True)
+            r16_arch.groupby(["Region", "Gm Winner"], observed=True)
             .agg(NumW=("Gm Winner", "count"))
             .reset_index()
         )
