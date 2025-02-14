@@ -14,10 +14,10 @@ def bracketology(season_year):
 
     return bracket_df
 
-
-def play_in_games():
-    winners = []
-    return winners
+## Needs added in
+# def play_in_games():
+#     winners = []
+#     return winners
 
 
 def round_64(season_year, tm_df, n):
