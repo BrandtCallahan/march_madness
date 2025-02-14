@@ -63,7 +63,7 @@ def tm_stats(
         (team_df["Season"] == season_year) & (team_df["Ref Name"] == team_url)
     ]
     team_gamelog = pd.read_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv"
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv"
     )
     team_gamelog = team_gamelog[team_gamelog["Tm"] == team_name]
 
@@ -214,7 +214,7 @@ def tm_stats(
 
         # get opponent W's
         opp_gamelog = pd.read_csv(
-            f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv"
+            f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv"
         )
         opp_gamelog = opp_gamelog[
             (opp_gamelog["Tm"] == opp_tmnm)
@@ -272,7 +272,7 @@ def save_team_stats(season_year, team_name_list, today):
         # pull out .csv
         try:
             season_boxscores = pd.read_csv(
-                f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
+                f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
             )
         except:
             season_boxscores = pd.DataFrame()
@@ -289,7 +289,7 @@ def save_team_stats(season_year, team_name_list, today):
         )
 
         add_tm.to_csv(
-            f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
+            f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
             index=False,
         )
 
@@ -303,7 +303,7 @@ def tm_rating(season_year, today):
 
     # read out gamelog
     team_gamelog = pd.read_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv"
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv"
     )
     # only games less than "today"
     team_gamelog = team_gamelog[
