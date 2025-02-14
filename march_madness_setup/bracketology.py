@@ -1,8 +1,8 @@
 import pandas as pd
 import numpy as np
 
-from play_matchup import *
-from team_dict import *
+from march_madness_setup.play_matchup import *
+from march_madness_setup.team_dict import *
 
 
 def bracketology(season_year):
@@ -14,13 +14,13 @@ def bracketology(season_year):
 
     return bracket_df
 
-## Need to add this feature
+## Needs added in
 # def play_in_games():
 #     winners = []
 #     return winners
 
 
-def round_64(season_year, today, tm_df, n):
+def round_64(season_year, tm_df, n):
 
     # Matchups (within regions)
     #   1 vs. 16
@@ -56,6 +56,12 @@ def round_64(season_year, today, tm_df, n):
             "West": 2,
             "South": 3,
             "Midwest": 4,
+        },
+        2023: {
+            "South": 1,
+            "East": 2,
+            "Midwest": 3,
+            "West": 4,
         }
     }
 
@@ -88,7 +94,7 @@ def round_64(season_year, today, tm_df, n):
             # print(f"{tm2} vs. {tm1}")
             # logger.info(f"{region}: {tm2} vs. {tm1}")
             game = matchup(
-                tm2, tm1, season_year, today, tm_df, neutral=True, conf_game=False, n=n
+                tm2, tm1, tm_df, n=n
             )
 
             winner_df = pd.concat(
@@ -108,7 +114,7 @@ def round_64(season_year, today, tm_df, n):
     return winner_df
 
 
-def round_32(season_year, today, tm_df, winner64_df, n):
+def round_32(tm_df, winner64_df, n):
 
     # Matchups (within regions)
     #   1/16 vs. 8/9
@@ -134,7 +140,7 @@ def round_32(season_year, today, tm_df, winner64_df, n):
     for region in region_list:
         region_df = winner64_df[winner64_df["Region"] == region].reset_index(drop=True).reset_index()
         region_df = region_df.rename(columns={"index": "seed"})
-        
+
         seed_list = []
         for i in range(len(region_df)):
             seed_list += [i]
@@ -151,9 +157,7 @@ def round_32(season_year, today, tm_df, winner64_df, n):
 
             # print(f"{tm2} vs. {tm1}")
             # logger.info(f"{region}: {tm2} vs. {tm1}")
-            game = matchup(
-                tm2, tm1, season_year, today, tm_df, neutral=True, conf_game=False, n=n
-            )
+            game = matchup(tm2, tm1, tm_df, n=n)
 
             winner_df = pd.concat(
                 [
@@ -172,7 +176,7 @@ def round_32(season_year, today, tm_df, winner64_df, n):
     return winner_df
 
 
-def sweet_16(season_year, today, tm_df, winner32_df, n):
+def sweet_16(tm_df, winner32_df, n):
 
     # Sweet Sixteen (within regions)
     #   1/16/8/9 vs. 2/15/7/10
@@ -217,9 +221,7 @@ def sweet_16(season_year, today, tm_df, winner32_df, n):
 
             # print(f"{tm2} vs. {tm1}")
             # logger.info(f"{region}: {tm2} vs. {tm1}")
-            game = matchup(
-                tm2, tm1, season_year, today, tm_df, neutral=True, conf_game=False, n=n
-            )
+            game = matchup(tm2, tm1, tm_df, n=n)
 
             winner_df = pd.concat(
                 [
@@ -238,7 +240,7 @@ def sweet_16(season_year, today, tm_df, winner32_df, n):
     return winner_df
 
 
-def elite_8(season_year, today, tm_df, winner16_df, n):
+def elite_8(tm_df, winner16_df, n):
 
     # Elite Eight (within regions)
     # Region Finals
@@ -282,9 +284,7 @@ def elite_8(season_year, today, tm_df, winner16_df, n):
 
             # print(f"{tm2} vs. {tm1}")
             # logger.info(f"{region}: {tm2} vs. {tm1}")
-            game = matchup(
-                tm2, tm1, season_year, today, tm_df, neutral=True, conf_game=False, n=n
-            )
+            game = matchup(tm2, tm1, tm_df, n=n)
 
             winner_df = pd.concat(
                 [
@@ -303,7 +303,7 @@ def elite_8(season_year, today, tm_df, winner16_df, n):
     return winner_df
 
 
-def final_4(season_year, today, tm_df, winner8_df, n):
+def final_4(tm_df, winner8_df, n):
 
     # Final Four
 
@@ -324,7 +324,7 @@ def final_4(season_year, today, tm_df, winner8_df, n):
     winner_df = pd.DataFrame()
     # for region in region_list:
     # region_df = winner8_df[winner8_df["Region"] == region]
-    
+
     seed_list = []
     for i in range(len(winner8_df)):
         seed_list += [i]
@@ -342,7 +342,7 @@ def final_4(season_year, today, tm_df, winner8_df, n):
 
         # print(f"{tm2} vs. {tm1}")
         # logger.info(f"Final Four: {tm2} vs. {tm1}")
-        game = matchup(tm2, tm1, season_year, today, tm_df, neutral=True, conf_game=False, n=n)
+        game = matchup(tm2, tm1, tm_df, n=n)
 
         winner_df = pd.concat(
             [
@@ -360,7 +360,7 @@ def final_4(season_year, today, tm_df, winner8_df, n):
     return winner_df
 
 
-def final_2(season_year, today, tm_df, winner4_df, n):
+def final_2(tm_df, winner4_df, n):
 
     # Final Four
 
@@ -403,7 +403,7 @@ def final_2(season_year, today, tm_df, winner4_df, n):
 
         # print(f"{tm2} vs. {tm1}")
         # logger.info(f"Championship: {tm2} vs. {tm1}")
-        game = matchup(tm2, tm1, season_year, today, tm_df, neutral=True, conf_game=False, n=n)
+        game = matchup(tm2, tm1, tm_df, n=n)
 
         winner_df = pd.concat(
             [
