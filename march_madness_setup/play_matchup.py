@@ -74,6 +74,10 @@ def matchup(away_tm, home_tm, tm_df, n=5):
     return [game_winner, true_point_diff.astype(float), win_pct.astype(float)]
 
 
+"""
+The single game win probability formula and visualization code were originally taken from @bjade and then modified to fit my data.
+https://github.com/bjade/ncaabbtools/blob/master/examples/kenpom_gamepredict.ipynb
+"""
 def single_matchup(away_tm, home_tm, tm_df, neutral_gm):
     team_df = get_teamnm()
     home_url = team_df[team_df["Tm Name"] == home_tm]["Ref Name"].reset_index(
