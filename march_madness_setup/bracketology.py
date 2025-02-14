@@ -7,7 +7,7 @@ from march_madness_setup.team_dict import *
 
 def bracketology(season_year):
     bracket_df = pd.read_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season_bracketology.csv"
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season_bracketology.csv"
     )
 
     bracket_df = bracket_df[bracket_df["season"] == season_year]
