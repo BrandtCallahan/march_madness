@@ -14,7 +14,7 @@ from team_dict import *
 
 pd.set_option("future.no_silent_downcasting", True)
 
-def matchup(away_tm, home_tm, season, today, tm_df, neutral, conf_game, n=1):
+def matchup(away_tm, home_tm, tm_df, n=1):
 
     team_df = get_teamnm()
     home_url = team_df[team_df["Tm Name"] == home_tm]["Ref Name"].reset_index(
@@ -23,8 +23,8 @@ def matchup(away_tm, home_tm, season, today, tm_df, neutral, conf_game, n=1):
     away_url = team_df[team_df["Tm Name"] == away_tm]["Ref Name"].reset_index(
         drop=True
     )[0]
-    hm_rating = tm_df[tm_df['Tm'] == home_tm].reset_index(drop=True)['Tm Rating'][0]
-    aw_rating = tm_df[tm_df["Tm"] == away_tm].reset_index(drop=True)["Tm Rating"][0]
+    hm_rating = tm_df[tm_df['Tm'] == home_tm].reset_index(drop=True)['Net Tm Rating'][0]
+    aw_rating = tm_df[tm_df["Tm"] == away_tm].reset_index(drop=True)["Net Tm Rating"][0]
 
     mean = (hm_rating) - (aw_rating)
     std = 10
