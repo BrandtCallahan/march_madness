@@ -9,7 +9,7 @@ import requests
 from bs4 import BeautifulSoup
 from logzero import logger
 
-from march_madness.utils.beautiful_soup_helper import get_soup_from_url
+from utils.beautiful_soup_helper import get_soup_from_url
 
 
 # functions for finding and pull tables taken from GitHub
