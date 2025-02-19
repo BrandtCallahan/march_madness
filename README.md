@@ -14,7 +14,7 @@ If you are looking to run a matchup for a single game then you should use the "c
 The single game view uses two teams' efficiencies (offense and defense), effective field goal percentages', and their respective average possessions per game to simulate a full game and then generate a point differential for the game as well as a win probability. If you would like to see the win probability and point spread visualized you can use the "sim_graph" function to generate that visual.
 
 Here is an example of the single game graphing results from the Vanderbilt @ Virginia Tech game earlier this season.
-![van_vt_bball](https://github.com/user-attachments/assets/2a610fa2-0694-4f97-8aae-b4e87244b693)
+
 
 
 ## March Madness Bracket
