@@ -3,7 +3,7 @@ import numpy as np
 
 from march_madness_setup.play_matchup import *
 from march_madness_setup.team_dict import *
-from march_madness.march_madness_setup.singlegame_setup import *
+from march_madness_setup.singlegame_setup import *
 
 
 def bracketology(season_year):
