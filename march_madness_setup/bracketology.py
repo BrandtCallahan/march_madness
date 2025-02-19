@@ -3,6 +3,7 @@ import numpy as np
 
 from march_madness_setup.play_matchup import *
 from march_madness_setup.team_dict import *
+from march_madness_setup.singlegame_setup import *
 
 
 def bracketology(season_year):
@@ -112,7 +113,7 @@ def round_64(season_year, tm_df, n):
     return winner_df
 
 
-def interactive_round_64(season_year, tm_df):
+def interactive_round_64(season_year, today):
 
     # Matchups (within regions)
     #   1 vs. 16
@@ -185,8 +186,9 @@ def interactive_round_64(season_year, tm_df):
 
             # print(f"{tm2} vs. {tm1}")
             # logger.info(f"{region}: {tm2} vs. {tm1}")
-            # game = matchup(tm2, tm1, tm_df, n=n)
-            game = single_matchup(tm2, tm1, tm_df, True)
+            ## game = matchup(tm2, tm1, tm_df, n=n)
+            ## game = single_matchup(tm2, tm1, tm_df, True)
+            game = game_sim(season_year, tm2, tm1, today, True, 501)
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -212,7 +214,7 @@ def interactive_round_64(season_year, tm_df):
                 ]
             ).reset_index(drop=True)
             winner_list += [game_winner]
-            print('\n\n')
+            print("\n\n")
 
     return winner_df
 
@@ -274,7 +276,7 @@ def round_32(tm_df, winner64_df, n):
     return winner_df
 
 
-def interactive_round_32(tm_df, winner64_df):
+def interactive_round_32(season_year, today, winner64_df):
 
     # Matchups (within regions)
     #   1/16 vs. 8/9
@@ -312,8 +314,9 @@ def interactive_round_32(tm_df, winner64_df):
 
             # print(f"{tm2} vs. {tm1}")
             # logger.info(f"{region}: {tm2} vs. {tm1}")
-            # game = matchup(tm2, tm1, tm_df, n=n)
-            game = single_matchup(tm2, tm1, tm_df, True)
+            ## game = matchup(tm2, tm1, tm_df, n=n)
+            ## game = single_matchup(tm2, tm1, tm_df, True)
+            game = game_sim(season_year, tm2, tm1, today, True, 501)
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -399,7 +402,7 @@ def sweet_16(tm_df, winner32_df, n):
     return winner_df
 
 
-def interactive_sweet_16(tm_df, winner32_df):
+def interactive_sweet_16(season_year, today, winner32_df):
 
     # Sweet Sixteen (within regions)
     #   1/16/8/9 vs. 2/15/7/10
@@ -435,8 +438,9 @@ def interactive_sweet_16(tm_df, winner32_df):
 
             # print(f"{tm2} vs. {tm1}")
             # logger.info(f"{region}: {tm2} vs. {tm1}")
-            # game = matchup(tm2, tm1, tm_df, n=n)
-            game = single_matchup(tm2, tm1, tm_df, True)
+            ## game = matchup(tm2, tm1, tm_df, n=n)
+            ## game = single_matchup(tm2, tm1, tm_df, True)
+            game = game_sim(season_year, tm2, tm1, today, True, 501)
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -521,7 +525,7 @@ def elite_8(tm_df, winner16_df, n):
     return winner_df
 
 
-def interactive_elite_8(tm_df, winner16_df):
+def interactive_elite_8(season_year, today, winner16_df):
 
     # Elite Eight (within regions)
     # Region Finals
@@ -556,8 +560,9 @@ def interactive_elite_8(tm_df, winner16_df):
 
             # print(f"{tm2} vs. {tm1}")
             # logger.info(f"{region}: {tm2} vs. {tm1}")
-            # game = matchup(tm2, tm1, tm_df, n=n)
-            game = single_matchup(tm2, tm1, tm_df, True)
+            ## game = matchup(tm2, tm1, tm_df, n=n)
+            ## game = single_matchup(tm2, tm1, tm_df, True)
+            game = game_sim(season_year, tm2, tm1, today, True, 501)
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -649,7 +654,7 @@ def final_4(tm_df, winner8_df, n):
     return winner_df
 
 
-def interactive_final_4(tm_df, winner8_df):
+def interactive_final_4(season_year, today, winner8_df):
 
     # Final Four
 
@@ -683,8 +688,9 @@ def interactive_final_4(tm_df, winner8_df):
 
         # print(f"{tm2} vs. {tm1}")
         # logger.info(f"{region}: {tm2} vs. {tm1}")
-        # game = matchup(tm2, tm1, tm_df, n=n)
-        game = single_matchup(tm2, tm1, tm_df, True)
+        ## game = matchup(tm2, tm1, tm_df, n=n)
+        ## game = single_matchup(tm2, tm1, tm_df, True)
+        game = game_sim(season_year, tm2, tm1, today, True, 501)
 
         # find winner
         if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -766,7 +772,7 @@ def final_2(tm_df, winner4_df, n):
     return winner_df
 
 
-def interactive_final_2(tm_df, winner4_df):
+def interactive_final_2(season_year, today, winner4_df):
 
     # Championship
 
@@ -800,8 +806,9 @@ def interactive_final_2(tm_df, winner4_df):
 
         # print(f"{tm2} vs. {tm1}")
         # logger.info(f"{region}: {tm2} vs. {tm1}")
-        # game = matchup(tm2, tm1, tm_df, n=n)
-        game = single_matchup(tm2, tm1, tm_df, True)
+        ## game = matchup(tm2, tm1, tm_df, n=n)
+        ## game = single_matchup(tm2, tm1, tm_df, True)
+        game = game_sim(season_year, tm2, tm1, today, True, 501)
 
         # find winner
         if game["Win Prob."][0] > game["Win Prob."][1]:

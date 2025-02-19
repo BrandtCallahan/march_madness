@@ -1,5 +1,5 @@
 import pandas as pd
-from march_madness_setup.play_matchup import *
+from march_madness_setup.singlegame_setup import *
 
 
 # input season year
@@ -10,17 +10,16 @@ today = pd.to_datetime("2025-02-14").strftime("%Y-%m-%d")
 # automatic date (today)
 today = datetime.now().strftime("%Y-%m-%d")
 
-tm_df = tm_rating(season, today)
-
 # matchup
-away_tm = 'Samford'
-home_tm = 'Kansas'
+away_tm = "Vanderbilt"
+home_tm = "Kentucky"
+n = 1001
 
 # neutral site game
-neutral_gm = True
+neutral_gm = False
 
 # single game results (win probability and average point spread)
-sg_win = single_matchup(away_tm, home_tm, tm_df, neutral_gm)
+sg_win = game_sim(season, away_tm, home_tm, today, neutral_gm, n)
 
 # graph single game results
-graph_win_prob(away_tm, home_tm, sg_win['Point Diff'][0], neutral_gm, 3.5, 11)
+sim_graph(season, away_tm, home_tm, sg_win)
