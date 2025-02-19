@@ -11,7 +11,11 @@ This is the base directory (starting point) for this entire repo. Once you set t
 ## Single Game Win Probability
 If you are looking to run a matchup for a single game then you should use the "cbb_singlegame.py" file. Here you will be able to setup a single game matchup between two teams from any point in the season. You will need to input the season you are wanting to use as well as the base day that you want the game to "happen on." This base day will limit the game data when calculating a team's efficiency rating. 
 
-The single game view uses two teams' efficiency (offense minus defense) and their respective average possessions per game to calculate a point differenctial for the game and then a win probability. If you would like to see the win probability and point spread visualized you can use the "graph_win_prob" function to generate that visual. 
+The single game view uses two teams' efficiencies (offense and defense), effective field goal percentages', and their respective average possessions per game to simulate a full game and then generate a point differential for the game as well as a win probability. If you would like to see the win probability and point spread visualized you can use the "sim_graph" function to generate that visual.
+
+Here is an example of the single game graphing results from the Vanderbilt @ Virginia Tech game earlier this season.
+![van_vt_bball](https://github.com/user-attachments/assets/2a610fa2-0694-4f97-8aae-b4e87244b693)
+
 
 ## March Madness Bracket
 If you want to simulate a march madness bracket for a year you will want to use the "cbb_marchmadness.py" file. Here you will be able to input the season and the base day to anchor your stats. Once you have those defined you will run the "march_madness" function. This function is set up as a Monte Carlo simulation in order to run through multiple bracket scenarios. The function will tabulate each simulation and output a dataframe that shows a teams percentage chance to advance to each round. 
