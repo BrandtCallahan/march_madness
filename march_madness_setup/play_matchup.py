@@ -153,4 +153,4 @@ def graph_win_prob(away_tm, home_tm, point_diff, neutral, home_adv, stdev):
         xy=(1.05 * (point_diff - home_adv), 1.04 * y.max()),
     )
     p.legend(loc=2)
-    p.show()
+    return p.show()
