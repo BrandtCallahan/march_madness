@@ -936,11 +936,15 @@ def sim_graph(season, away_tm, home_tm, sim_results_df):
     if sim_results_df['Win Prob.'][0] > sim_results_df['Win Prob.'][1]:
         gm_winner = sim_results_df['Tm'][0]
         pt_spread = sim_results_df["Point Diff"][0] * -1
+        away_win_prob = sim_results_df["Win Prob."][0]
+        home_win_prob = sim_results_df["Win Prob."][1]
     else:
         gm_winner = sim_results_df['Tm'][1]
         pt_spread = sim_results_df["Point Diff"][1] * -1
+        away_win_prob = sim_results_df["Win Prob."][0]
+        home_win_prob = sim_results_df["Win Prob."][1]
 
-    sim_results = [gm_winner, pt_spread]
+    sim_results = [gm_winner, pt_spread, away_win_prob, home_win_prob]
 
     # Set style
     # plt.style.use("seaborn")
@@ -954,31 +958,49 @@ def sim_graph(season, away_tm, home_tm, sim_results_df):
     )
     y = norm.pdf(x, sim_results[1], stdev)
 
-    home_win_prob = norm.cdf(0, -(sim_results[1]), stdev)
-    away_win_prob = norm.cdf(0, (sim_results[1]), stdev)
-
     # Plot the distribution curve
     ax.plot(x, y, color="black", lw=2, alpha=0.7)
 
-    # Fill areas
-    ax.fill_between(
-        x,
-        0,
-        y,
-        where=x >= 0,
-        facecolor=home_tm_color,
-        alpha=0.3,
-        label=f"{home_abbr} Win Probability: {home_win_prob:.1%}",
-    )
-    ax.fill_between(
-        x,
-        0,
-        y,
-        where=x <= 0,
-        facecolor=away_tm_color,
-        alpha=0.3,
-        label=f"{away_abbr} Win Probability: {away_win_prob:.1%}",
-    )
+    if away_win_prob > home_win_prob:
+        # Fill areas
+        ax.fill_between(
+            x,
+            0,
+            y,
+            where=x <= 0,
+            facecolor=home_tm_color,
+            alpha=0.3,
+            label=f"{home_abbr} Win Probability: {home_win_prob:.1%}",
+        )
+        ax.fill_between(
+            x,
+            0,
+            y,
+            where=x > 0,
+            facecolor=away_tm_color,
+            alpha=0.3,
+            label=f"{away_abbr} Win Probability: {away_win_prob:.1%}",
+        )
+    else:
+        # Fill areas
+        ax.fill_between(
+            x,
+            0,
+            y,
+            where=x > 0,
+            facecolor=home_tm_color,
+            alpha=0.3,
+            label=f"{home_abbr} Win Probability: {home_win_prob:.1%}",
+        )
+        ax.fill_between(
+            x,
+            0,
+            y,
+            where=x <= 0,
+            facecolor=away_tm_color,
+            alpha=0.3,
+            label=f"{away_abbr} Win Probability: {away_win_prob:.1%}",
+        )
 
     # Add mean line and annotation
     ax.axvline((sim_results[1]), c="black", ls="--", alpha=0.5)
@@ -1031,7 +1053,7 @@ def sim_graph(season, away_tm, home_tm, sim_results_df):
         f"{away_tm} vs {home_tm}\n Win Probability Distribution", fontsize=14, pad=20
     )
     ax.set_xlabel("Point Differential", fontsize=12)
-    ax.set_ylabel("Probability Density", fontsize=12)
+    # ax.set_ylabel("Probability Density", fontsize=12)
     ax.legend(loc="upper left", frameon=True)
     ax.grid(True, alpha=0.3)
 
@@ -1040,9 +1062,8 @@ def sim_graph(season, away_tm, home_tm, sim_results_df):
     ax.spines["right"].set_visible(False)
 
     plt.tight_layout()
-    # plt.show()
-    return plt.show()
 
+    return plt.show()
 
 def game_radar(season, away_tm, home_tm, today):
 
