@@ -15,7 +15,7 @@ The single game view uses two teams' efficiencies (offense and defense), effecti
 
 Here is an example of the single game graphing results from the Vanderbilt @ Kentucky game on 2025-02-19.
 
-![van_ken_bball2](https://github.com/user-attachments/assets/e054852b-684b-41b5-a27d-da88b3f08a8c)
+![van_ken_bball2](https://github.com/user-attachments/assets/731bc7a9-17bf-4f4d-96e7-85b2c2987c3a)
 
 
 ## March Madness Bracket
