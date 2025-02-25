@@ -6,7 +6,7 @@ from march_madness_setup.singlegame_setup import *
 season = 2025
 
 # manual input for date
-today = pd.to_datetime("2025-02-14").strftime("%Y-%m-%d")
+today = pd.to_datetime("2025-02-19").strftime("%Y-%m-%d")
 # automatic date (today)
 today = datetime.now().strftime("%Y-%m-%d")
 
@@ -21,5 +21,7 @@ neutral_gm = False
 # single game results (win probability and average point spread)
 sg_win = game_sim(season, away_tm, home_tm, today, neutral_gm, n)
 
-# graph single game results
-sim_graph(season, away_tm, home_tm, sg_win)
+# donut chart win probability for single game
+## hm_tm_prim/aw_tm_prim == True: will show the team's primary color on chart
+## == False: will show the team's secondary color
+sim_donut_graph(season, away_tm, home_tm, sg_win, hm_tm_prim=True, aw_tm_prim=True)
