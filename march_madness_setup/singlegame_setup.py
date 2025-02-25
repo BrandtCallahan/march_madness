@@ -905,15 +905,15 @@ def game_sim(season, away_tm, home_tm, today, neutral, n):
     gm_results = pd.DataFrame(
         data={
             "Tm": [away_tm, home_tm],
-            'Win Prob.': [away_tm_w/n, home_tm_w/n],
-            'Point Diff': [aw_point_diff, hm_point_diff],
+            "Win Prob.": [away_tm_w / n, home_tm_w / n],
+            "Point Diff": [aw_point_diff, hm_point_diff],
         }
     )
 
     return gm_results
 
 
-def sim_graph(season, away_tm, home_tm, sim_results_df):
+def sim_graph(season, away_tm, home_tm, sim_results_df, date_label):
 
     team_df = get_teamnm()
 
@@ -933,13 +933,13 @@ def sim_graph(season, away_tm, home_tm, sim_results_df):
 
     stdev = 10
 
-    if sim_results_df['Win Prob.'][0] > sim_results_df['Win Prob.'][1]:
-        gm_winner = sim_results_df['Tm'][0]
+    if sim_results_df["Win Prob."][0] > sim_results_df["Win Prob."][1]:
+        gm_winner = sim_results_df["Tm"][0]
         pt_spread = sim_results_df["Point Diff"][0] * -1
         away_win_prob = sim_results_df["Win Prob."][0]
         home_win_prob = sim_results_df["Win Prob."][1]
     else:
-        gm_winner = sim_results_df['Tm'][1]
+        gm_winner = sim_results_df["Tm"][1]
         pt_spread = sim_results_df["Point Diff"][1] * -1
         away_win_prob = sim_results_df["Win Prob."][0]
         home_win_prob = sim_results_df["Win Prob."][1]
@@ -1032,11 +1032,14 @@ def sim_graph(season, away_tm, home_tm, sim_results_df):
     #     )
 
     # Add game information box
-    info_text = (
-        f"Game Details:\n"
-        f"Gameday: {input("What day is the game? ")}\n"
-        f"Location: @ {home_tm}"
-    )
+    if date_label:
+        info_text = (
+            f"Game Details:\n"
+            f"Gameday: {input("What day is the game? ")}\n"
+            f"Location: @ {home_tm}"
+        )
+    else:
+        info_text = f"Game Details:\n" f"Location: @ {home_tm}"
     ax.text(
         0.98,
         0.98,
@@ -1061,9 +1064,102 @@ def sim_graph(season, away_tm, home_tm, sim_results_df):
     ax.spines["top"].set_visible(False)
     ax.spines["right"].set_visible(False)
 
+    # hide y-axis ticks
+    ax.tick_params(axis="y", labelleft=False)
+
     plt.tight_layout()
 
+    # plt.show()
     return plt.show()
+
+
+def sim_donut_graph(season, away_tm, home_tm, sim_results_df, hm_tm_prim, aw_tm_prim):
+
+    team_df = get_teamnm()
+
+    away_abbr = team_df[
+        (team_df["Tm Name"] == away_tm) & (team_df["Season"] == season)
+    ].reset_index(drop=True)["Gamelog Name"][0]
+    home_abbr = team_df[
+        (team_df["Tm Name"] == home_tm) & (team_df["Season"] == season)
+    ].reset_index(drop=True)["Gamelog Name"][0]
+
+    away_tm_color = team_df[
+        (team_df["Tm Name"] == away_tm) & (team_df["Season"] == season)
+    ].reset_index(drop=True)["Tm Primary Color"][0]
+    home_tm_color = team_df[
+        (team_df["Tm Name"] == home_tm) & (team_df["Season"] == season)
+    ].reset_index(drop=True)["Tm Primary Color"][0]
+
+    stdev = 10
+
+    if sim_results_df["Win Prob."][0] > sim_results_df["Win Prob."][1]:
+        gm_winner = sim_results_df["Tm"][0]
+        pt_spread = sim_results_df["Point Diff"][0] * -1
+        away_win_prob = sim_results_df["Win Prob."][0]
+        home_win_prob = sim_results_df["Win Prob."][1]
+    else:
+        gm_winner = sim_results_df["Tm"][1]
+        pt_spread = sim_results_df["Point Diff"][1] * -1
+        away_win_prob = sim_results_df["Win Prob."][0]
+        home_win_prob = sim_results_df["Win Prob."][1]
+
+    sim_results = [gm_winner, pt_spread, away_win_prob, home_win_prob]
+    win_prob = [away_win_prob, home_win_prob]
+
+    home_tm_color_prim = get_teamcolor_prim(home_tm, season)
+    home_tm_color_sec = get_teamcolor_sec(home_tm, season)
+    away_tm_color_prim = get_teamcolor_prim(away_tm, season)
+    away_tm_color_sec = get_teamcolor_sec(away_tm, season)
+    
+    if hm_tm_prim:
+        home_tm_color = home_tm_color_prim
+    else:
+        home_tm_color = home_tm_color_sec
+    if aw_tm_prim:
+        away_tm_color = away_tm_color_prim
+    else:
+        away_tm_color = away_tm_color_sec
+    game_colors = [away_tm_color, home_tm_color]
+
+    # explosions
+    explode = [0.05, 0.05]
+
+    # Pie Chart
+    plt.pie(
+        win_prob,
+        colors=game_colors,
+        textprops={'color': 'white', 'fontsize': 11,},
+        autopct="%1.1f%%",
+        pctdistance=0.82,
+        explode=explode,
+        wedgeprops={'linewidth': 1, 'edgecolor': '000000', 'width': 0.8,},
+        startangle=90,
+    )
+
+    # draw circle
+    center_circle = plt.Circle((0,0), 0.7, fc='white')
+    fig = plt.gcf()
+
+    # adding circle in Pie Chart
+    fig.gca().add_artist(center_circle)
+
+    # # Add game information to center of chart
+    plt.text(0, 0, f"Location: @ {home_abbr}\n Point Spread: {round(sim_results[1], 1)}", ha="center", va="center", fontsize=10,)
+
+    # Add Legends
+    plt.legend([away_abbr, home_abbr], loc="upper right")
+
+    # Ensuring circle proportion
+    plt.axis('equal')
+
+    # Title
+    plt.title(f"{away_abbr} @ {home_abbr}\n", fontsize=14)
+    plt.suptitle('Win Probability', x=0.5, y=0.92, fontsize=10)
+    # plt.show()
+
+    return plt.show()
+
 
 def game_radar(season, away_tm, home_tm, today):
 
@@ -1287,5 +1383,7 @@ def game_radar(season, away_tm, home_tm, today):
         # polar=dict(radialaxis=dict(visible=True, range=[0, len(lg_stats_df)])),
         showlegend=True,
     )
+
+    # fig.show()
 
     return fig.show()

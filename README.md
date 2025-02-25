@@ -11,11 +11,11 @@ This is the base directory (starting point) for this entire repo. Once you set t
 ## Single Game Win Probability
 If you are looking to run a matchup for a single game then you should use the "cbb_singlegame.py" file. Here you will be able to setup a single game matchup between two teams from any point in the season. You will need to input the season you are wanting to use as well as the base day that you want the game to "happen on." This base day will limit the game data when calculating a team's efficiency rating. 
 
-The single game view uses two teams' efficiencies (offense and defense), effective field goal percentages', and their respective average possessions per game to simulate a full game and then generate a point differential for the game as well as a win probability. If you would like to see the win probability and point spread visualized you can use the "sim_graph" function to generate that visual.
+The single game view uses two teams' efficiencies (offense and defense), effective field goal percentages', and their respective average possessions per game to simulate a full game and then generate a point differential for the game as well as a win probability. If you would like to see the win probability and point spread visualized you can use the "sim_donut_graph" function to generate that visual.
 
 Here is an example of the single game graphing results from the Vanderbilt @ Kentucky game on 2025-02-19.
 
-![van_ken_bball2](https://github.com/user-attachments/assets/731bc7a9-17bf-4f4d-96e7-85b2c2987c3a)
+![van_ken_bball_021925](https://github.com/user-attachments/assets/1cc5dd18-f096-4bb0-b1f1-e4df8e6d079d)
 
 
 ## March Madness Bracket
