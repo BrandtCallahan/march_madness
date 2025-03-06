@@ -77,3 +77,50 @@ def pullTable(url, tableID):
     data.columns = [index_mapping.get(i, col) for i, col in enumerate(data.columns)]
 
     return data
+
+
+# alternate way to get gamelog data
+def read_gamelog(url):
+
+    # gamelog data
+    data = pd.read_html(url)[0]
+
+    # df column names
+    columns = data.columns.droplevel(0)
+
+    data.columns = columns
+
+    index_mapping = {
+        0: 'Rank',
+        1: 'G',
+        3: "Location",
+        5: 'Game Type',
+        6: 'W/L',
+        7: "Tm Score",
+        8: "Opp Score",
+        31: "Opp FG",
+        32: "Opp FGA",
+        33: "Opp FG%",
+        34: "Opp 3P",
+        35: "Opp 3PA",
+        36: "Opp 3P%",
+        37: 'Opp 2P',
+        38: 'Opp 2PA',
+        39: 'Opp 2P%',
+        40: 'Opp eFG%',
+        41: "Opp FT",
+        42: "Opp FTA",
+        43: "Opp FT%",
+        44: "Opp ORB",
+        45: 'Opp DRB',
+        46: "Opp TRB",
+        47: "Opp AST",
+        48: "Opp STL",
+        49: "Opp BLK",
+        50: "Opp TOV",
+        51: "Opp PF",
+    }
+    data.columns = [index_mapping.get(i, col) for i, col in enumerate(data.columns)]
+
+
+    return data
