@@ -1,5 +1,5 @@
 import pandas as pd
-from march_madness_setup.singlegame_setup import *
+from single_game_setup.singlegame_setup import *
 
 
 # input season year
