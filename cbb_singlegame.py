@@ -13,7 +13,7 @@ today = datetime.now().strftime("%Y-%m-%d")
 # matchup
 away_tm = "Vanderbilt"
 home_tm = "Kentucky"
-n = 1001
+n = 201
 
 # neutral site game
 neutral_gm = False
