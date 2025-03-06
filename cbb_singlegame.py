@@ -1,5 +1,5 @@
 import pandas as pd
-from march_madness_setup.singlegame_setup import *
+from single_game_setup.singlegame_setup import *
 
 
 # input season year
@@ -13,7 +13,7 @@ today = datetime.now().strftime("%Y-%m-%d")
 # matchup
 away_tm = "Vanderbilt"
 home_tm = "Kentucky"
-n = 1001
+n = 201
 
 # neutral site game
 neutral_gm = False
