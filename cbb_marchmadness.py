@@ -12,7 +12,7 @@ today = pd.to_datetime("2025-02-14").strftime("%Y-%m-%d")
 today = datetime.now().strftime("%Y-%m-%d")
 
 # March Madness automatic simulation
-bracketology_df = march_madness(season, today, 11)
+bracketology_df = march_madness(season, today, 101)
 
 # Interactive March Madness bracket
 #   User input

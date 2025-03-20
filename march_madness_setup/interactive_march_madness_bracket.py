@@ -9,7 +9,7 @@ def interactive_march_madness(season, today):
 
     n = int(input(f"How many brackets do you want to fill out? "))
     
-    tm_df = tm_rating(season, today)
+    # tm_df = tm_rating(season, today)
     mm_bracket = bracketology(season)[["season", "region", "seed", "tm"]]
 
     results = []
@@ -23,7 +23,7 @@ def interactive_march_madness(season, today):
     logger.info(f"Welcome to March Madness")
 
     # Round of 64
-    r64 = interactive_round_64(season, tm_df)
+    r64 = interactive_round_64(season, today)
     r64_arch = pd.concat([r64_arch, r64]).reset_index(drop=True)
     r64_hist = (
         r64_arch.groupby(["Region", "Gm Winner"], observed=True)
@@ -34,7 +34,7 @@ def interactive_march_madness(season, today):
     r64_hist["Adv%"] = r64_hist["NumW"].fillna(0) / r64_hist["NumG"]
 
     # Round of 32
-    r32 = interactive_round_32(tm_df, r64)
+    r32 = interactive_round_32(season, today, r64)
     r32_arch = pd.concat([r32_arch, r32]).reset_index(drop=True)
     r32_hist = (
         r32_arch.groupby(["Region", "Gm Winner"], observed=True)
@@ -45,7 +45,7 @@ def interactive_march_madness(season, today):
     r32_hist["Adv%"] = r32_hist["NumW"].fillna(0) / r32_hist["NumG"]
 
     # Sweet Sixteen
-    r16 = interactive_sweet_16(tm_df, r32)
+    r16 = interactive_sweet_16(season, today, r32)
     r16_arch = pd.concat([r16_arch, r16]).reset_index(drop=True)
     r16_hist = (
         r16_arch.groupby(["Region", "Gm Winner"], observed=True)
@@ -56,7 +56,7 @@ def interactive_march_madness(season, today):
     r16_hist["Adv%"] = r16_hist["NumW"].fillna(0) / r16_hist["NumG"]
 
     # Elite Eight
-    r8 = interactive_elite_8(tm_df, r16)
+    r8 = interactive_elite_8(season, today, r16)
     r8_arch = pd.concat([r8_arch, r8]).reset_index(drop=True)
     r8_hist = (
         r8_arch.groupby(["Region", "Gm Winner"], observed=True)
@@ -67,7 +67,7 @@ def interactive_march_madness(season, today):
     r8_hist["Adv%"] = r8_hist["NumW"].fillna(0) / r8_hist["NumG"]
 
     # Final Four
-    r4 = interactive_final_4(tm_df, r8)
+    r4 = interactive_final_4(season, today, r8)
     r4_arch = pd.concat([r4_arch, r4]).reset_index(drop=True)
     r4_hist = (
         r4_arch.groupby(["Gm Winner"], observed=True)
@@ -78,7 +78,7 @@ def interactive_march_madness(season, today):
     r4_hist["Adv%"] = r4_hist["NumW"].fillna(0) / r4_hist["NumG"]
 
     # Championship
-    r2 = interactive_final_2(tm_df, r4)
+    r2 = interactive_final_2(season, today, r4)
     r2_arch = pd.concat([r2_arch, r2]).reset_index(drop=True)
     r2_hist = (
         r2_arch.groupby(["Gm Winner"], observed=True)

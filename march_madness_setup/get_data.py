@@ -28,11 +28,13 @@ def get_team_stats(season_year, team_url, team_name):
     # findTables(url)
 
     # team statistics
-    team_gamelog = pullTable(url, tableID="sgl-basic_NCAAM")
+    ## team_gamelog = pullTable(url, tableID="sgl-basic_NCAAM")
+    team_gamelog = read_gamelog(url)
     team_gamelog = team_gamelog[
         ~(team_gamelog["Opp"].isin(["", "Opponent", "Opp"]))
-        & ~(team_gamelog["W/L"].isin([""]))
-        & ~(team_gamelog["FG"].isin([""]))
+        & ~(team_gamelog["W/L"].isin(["", np.nan, pd.NA]))
+        & ~(team_gamelog["FG"].isin(["", np.nan, pd.NA]))
+        & ~(team_gamelog["G"].isin(["", np.nan, pd.NA]))
     ].reset_index(drop=True)
 
     # drop games with no data
@@ -243,7 +245,6 @@ def tm_stats(
 
     return team_df
 
-
 def save_team_stats(season_year, team_name_list, today):
     teamnm_df = get_teamnm()
     conference_dict = (
@@ -268,11 +269,65 @@ def save_team_stats(season_year, team_name_list, today):
         team_gamelog = team_gamelog[
             (team_gamelog["Date"].astype("datetime64[ns]")) < today.strftime("%Y-%m-%d")
         ]
+        team_gamelog[" "] = np.nan
+        team_gamelog["Opp"] = team_gamelog["Opp"].replace(
+            {
+                "Louisiana State": "LSU",
+                "North Carolina": "UNC",
+                "Maryland Eastern Shore": "Maryland-Eastern Shore",
+            }
+        )
+
+        team_gamelog = team_gamelog[
+            [
+                "G",
+                "Date",
+                "Location",
+                "Opp",
+                "W/L",
+                "Tm Score",
+                "Opp Score",
+                "FG",
+                "FGA",
+                "FG%",
+                "3P",
+                "3PA",
+                "3P%",
+                "FT",
+                "FTA",
+                "FT%",
+                "ORB",
+                "TRB",
+                "AST",
+                "STL",
+                "BLK",
+                "TOV",
+                "PF",
+                " ",
+                "Opp FG",
+                "Opp FGA",
+                "Opp FG%",
+                "Opp 3P",
+                "Opp 3PA",
+                "Opp 3P%",
+                "Opp FT",
+                "Opp FTA",
+                "Opp FT%",
+                "Opp ORB",
+                "Opp TRB",
+                "Opp AST",
+                "Opp STL",
+                "Opp BLK",
+                "Opp TOV",
+                "Opp PF",
+                "Tm",
+            ]
+        ]
 
         # pull out .csv
         try:
             season_boxscores = pd.read_csv(
-                f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
+                f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
             )
         except:
             season_boxscores = pd.DataFrame()
@@ -289,7 +344,7 @@ def save_team_stats(season_year, team_name_list, today):
         )
 
         add_tm.to_csv(
-            f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
+            f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
             index=False,
         )
 

@@ -3,7 +3,7 @@ import numpy as np
 
 from march_madness_setup.play_matchup import *
 from march_madness_setup.team_dict import *
-from march_madness_setup.singlegame_setup import *
+from single_game_setup.singlegame_setup import *
 
 
 def bracketology(season_year):
@@ -15,7 +15,7 @@ def bracketology(season_year):
 
     return bracket_df
 
-
+# need to add in play in game results
 def play_in_games():
     winners = []
     return winners
@@ -52,6 +52,12 @@ def round_64(season_year, tm_df, n):
         16: 16,
     }
     reg_rnk = {
+        2025: {
+            "South": 1,
+            "West": 2,
+            "East": 3,
+            "Midwest": 4,
+        },
         2024: {
             "East": 1,
             "West": 2,
@@ -144,6 +150,12 @@ def interactive_round_64(season_year, today):
         16: 16,
     }
     reg_rnk = {
+        2025: {
+            "South": 1,
+            "West": 2,
+            "East": 3,
+            "Midwest": 4,
+        },
         2024: {
             "East": 1,
             "West": 2,
@@ -185,10 +197,10 @@ def interactive_round_64(season_year, today):
             )[0]
 
             # print(f"{tm2} vs. {tm1}")
-            # logger.info(f"{region}: {tm2} vs. {tm1}")
+            logger.info(f"{region}: {tm2} vs. {tm1}")
             ## game = matchup(tm2, tm1, tm_df, n=n)
             ## game = single_matchup(tm2, tm1, tm_df, True)
-            game = game_sim(season_year, tm2, tm1, today, True, 501)
+            game = game_sim(season_year, tm2, tm1, today, True, 101)
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -313,10 +325,10 @@ def interactive_round_32(season_year, today, winner64_df):
             ].reset_index(drop=True)[0]
 
             # print(f"{tm2} vs. {tm1}")
-            # logger.info(f"{region}: {tm2} vs. {tm1}")
+            logger.info(f"{region}: {tm2} vs. {tm1}")
             ## game = matchup(tm2, tm1, tm_df, n=n)
             ## game = single_matchup(tm2, tm1, tm_df, True)
-            game = game_sim(season_year, tm2, tm1, today, True, 501)
+            game = game_sim(season_year, tm2, tm1, today, True, 101)
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -437,10 +449,10 @@ def interactive_sweet_16(season_year, today, winner32_df):
             ].reset_index(drop=True)[0]
 
             # print(f"{tm2} vs. {tm1}")
-            # logger.info(f"{region}: {tm2} vs. {tm1}")
+            logger.info(f"{region}: {tm2} vs. {tm1}")
             ## game = matchup(tm2, tm1, tm_df, n=n)
             ## game = single_matchup(tm2, tm1, tm_df, True)
-            game = game_sim(season_year, tm2, tm1, today, True, 501)
+            game = game_sim(season_year, tm2, tm1, today, True, 101)
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -559,10 +571,10 @@ def interactive_elite_8(season_year, today, winner16_df):
             ].reset_index(drop=True)[0]
 
             # print(f"{tm2} vs. {tm1}")
-            # logger.info(f"{region}: {tm2} vs. {tm1}")
+            logger.info(f"{region}: {tm2} vs. {tm1}")
             ## game = matchup(tm2, tm1, tm_df, n=n)
             ## game = single_matchup(tm2, tm1, tm_df, True)
-            game = game_sim(season_year, tm2, tm1, today, True, 501)
+            game = game_sim(season_year, tm2, tm1, today, True, 101)
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -687,10 +699,10 @@ def interactive_final_4(season_year, today, winner8_df):
         ].reset_index(drop=True)[0]
 
         # print(f"{tm2} vs. {tm1}")
-        # logger.info(f"{region}: {tm2} vs. {tm1}")
+        logger.info(f"Final Four: {tm2} vs. {tm1}")
         ## game = matchup(tm2, tm1, tm_df, n=n)
         ## game = single_matchup(tm2, tm1, tm_df, True)
-        game = game_sim(season_year, tm2, tm1, today, True, 501)
+        game = game_sim(season_year, tm2, tm1, today, True, 101)
 
         # find winner
         if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -805,10 +817,10 @@ def interactive_final_2(season_year, today, winner4_df):
         ].reset_index(drop=True)[0]
 
         # print(f"{tm2} vs. {tm1}")
-        # logger.info(f"{region}: {tm2} vs. {tm1}")
+        logger.info(f"Championship: {tm2} vs. {tm1}")
         ## game = matchup(tm2, tm1, tm_df, n=n)
         ## game = single_matchup(tm2, tm1, tm_df, True)
-        game = game_sim(season_year, tm2, tm1, today, True, 501)
+        game = game_sim(season_year, tm2, tm1, today, True, 101)
 
         # find winner
         if game["Win Prob."][0] > game["Win Prob."][1]:

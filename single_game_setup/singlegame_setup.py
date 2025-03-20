@@ -38,6 +38,61 @@ def pregame(season, away_tm, home_tm, today):
     home_df['Tm'] = home_tm
 
     team_gamelog = pd.concat([away_df, home_df]).reset_index(drop=True)
+    team_gamelog =  team_gamelog[(~(team_gamelog["Opp"].isin(["", "Opponent", "Opp"]))
+        & ~(team_gamelog["W/L"].isin(["", np.nan, pd.NA]))
+        & ~(team_gamelog["FG"].isin(["", np.nan, pd.NA]))
+        & ~(team_gamelog["G"].isin(["", np.nan, pd.NA])))].reset_index(drop=True)
+
+    # set dtypes 
+    team_gamelog = team_gamelog.astype(
+        {
+            "G": int,
+            "Tm Score": int,
+            "Opp Score": int,
+            "FG": int,
+            "FGA": int,
+            "FG%": float,
+            '3P': int,
+            '3PA': int,
+            '3P%': float,
+            '2P': int,
+            '2PA': int,
+            '2P%': float,
+            'eFG%': float,
+            'FT': int,
+            'FTA': int,
+            'FT%': float,
+            'ORB': int,
+            'DRB': int,
+            'TRB': int,
+            'AST': int,
+            'STL': int,
+            'BLK': int,
+            'TOV': int,
+            'PF': int,
+            "Opp FG": int,
+            "Opp FGA": int,
+            "Opp FG%": float,
+            'Opp 3P': int,
+            'Opp 3PA': int,
+            'Opp 3P%': float,
+            'Opp 2P': int,
+            'Opp 2PA': int,
+            'Opp 2P%': float,
+            'Opp eFG%': float,
+            'Opp FT': int,
+            'Opp FTA': int,
+            'Opp FT%': float,
+            'Opp ORB': int,
+            'Opp DRB': int,
+            'Opp TRB': int,
+            'Opp AST': int,
+            'Opp STL': int,
+            'Opp BLK': int,
+            'Opp TOV': int,
+            'Opp PF': int,
+            },
+         )
 
     # only games less than "today"
     team_gamelog = team_gamelog[
@@ -885,8 +940,8 @@ def game_sim(season, away_tm, home_tm, today, neutral, n):
         ).reset_index(drop=True)
 
     # find winner from monte carlo
-    home_tm_w = results_df["Winner"].str.count(f"{home_tm}").sum()
-    away_tm_w = results_df["Winner"].str.count(f"{away_tm}").sum()
+    home_tm_w = results_df["Winner"].str.count(f"{home_tm.split("(")[0]}").sum()
+    away_tm_w = results_df["Winner"].str.count(f"{away_tm.split("(")[0]}").sum()
 
     if home_tm_w > away_tm_w:
         game_winner = home_tm
