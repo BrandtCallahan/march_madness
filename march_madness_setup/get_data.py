@@ -327,7 +327,7 @@ def save_team_stats(season_year, team_name_list, today):
         # pull out .csv
         try:
             season_boxscores = pd.read_csv(
-                f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
+                f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
             )
         except:
             season_boxscores = pd.DataFrame()
@@ -344,7 +344,7 @@ def save_team_stats(season_year, team_name_list, today):
         )
 
         add_tm.to_csv(
-            f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
+            f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season_year}_tm_boxscores.csv",
             index=False,
         )
 
