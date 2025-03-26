@@ -26,7 +26,7 @@ def pregame(season, away_tm, home_tm, today):
 
     # # pull in team data
     # team_gamelog = pd.read_csv(
-    #     f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_tm_boxscores.csv"
+    #     f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_tm_boxscores.csv"
     # )
     # pull straight from college basketball reference
     aw_url = f"https://www.sports-reference.com/cbb/schools/{aw_df['Ref Name'][0]}/men/{season}-gamelogs.html"
@@ -460,7 +460,7 @@ def lg_stats(season, today):
 
     # pull in team data
     team_gamelog = pd.read_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_tm_boxscores.csv"
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_tm_boxscores.csv"
     )
     # only games less than "today"
     team_gamelog = team_gamelog[
