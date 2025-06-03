@@ -11,7 +11,7 @@ from utils.webscrape_utils import (
     pullTable,
 )
 
-from march_madness_setup.team_dict import get_teamnm
+from utils.team_dict import get_teamnm
 
 
 def get_team_stats(season_year, team_url, team_name):
