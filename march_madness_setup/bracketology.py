@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from march_madness_setup.play_matchup import *
-from march_madness_setup.team_dict import *
+from utils.team_dict import *
 from single_game_setup.singlegame_setup import *
 
 

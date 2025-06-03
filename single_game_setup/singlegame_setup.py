@@ -9,8 +9,8 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 
-from march_madness_setup.get_data import *
-from march_madness_setup.team_dict import *
+from utils.get_data import *
+from utils.team_dict import *
 from utils.beautiful_soup_helper import *
 
 pd.set_option("future.no_silent_downcasting", True)
