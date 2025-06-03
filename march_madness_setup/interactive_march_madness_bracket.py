@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 
 from march_madness_setup.bracketology import *
-from march_madness_setup.get_data import *
+from utils.get_data import *
 
 
 def interactive_march_madness(season, today):
