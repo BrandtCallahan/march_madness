@@ -44,7 +44,7 @@ def gamelog_setup(season, tm_name, gm_date):
 
     # temporary workaround
     gamelog = pd.read_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_tm_boxscores.csv",
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_tm_boxscores.csv",
     )
     team_gamelog = gamelog[gamelog["Tm"] == tm_df["Tm Name"][0]]
 
@@ -308,7 +308,7 @@ def season_data(season):
 
     # read results df
     results_df = pd.read_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_results.csv",
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_results.csv",
     )
 
     # for each result, run rolling_gamedata()
@@ -342,7 +342,7 @@ def season_data(season):
 
     # save .csv file
     season_df.to_csv(
-        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_matchup_results.csv",
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_matchup_results.csv",
         index=False,
     )
 
@@ -355,7 +355,7 @@ def single_game_model(data_seasons, today, matchup):
     matchup_df = pd.DataFrame()
     for season in data_seasons:
         tmp_df = pd.read_csv(
-            f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_matchup_results.csv",
+            f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_matchup_results.csv",
         )
         tmp_df = tmp_df.astype({"Game Date": "datetime64[ns]"})
 
