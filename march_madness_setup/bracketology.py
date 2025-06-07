@@ -2,23 +2,25 @@ import pandas as pd
 import numpy as np
 
 from march_madness_setup.play_matchup import *
+from single_game_setup.ml_singlegame_setup import *
 from utils.team_dict import *
 from single_game_setup.singlegame_setup import *
 
 
 def bracketology(season_year):
     bracket_df = pd.read_csv(
-        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season_bracketology.csv"
+        f"~/OneDrive - Tennessee Titans/Documents/Python/professional_portfolio/march_madness/csv_files/season_bracketology.csv"
     )
 
     bracket_df = bracket_df[bracket_df["season"] == season_year]
 
     return bracket_df
 
-# need to add in play in game results
-def play_in_games():
-    winners = []
-    return winners
+
+## Need to add in this for future version
+# def play_in_games():
+#     winners = []
+#     return winners
 
 
 def round_64(season_year, tm_df, n):
@@ -119,7 +121,7 @@ def round_64(season_year, tm_df, n):
     return winner_df
 
 
-def interactive_round_64(season_year, today):
+def interactive_round_64(season_year, today, modeltype):
 
     # Matchups (within regions)
     #   1 vs. 16
@@ -200,7 +202,14 @@ def interactive_round_64(season_year, today):
             logger.info(f"{region}: {tm2} vs. {tm1}")
             ## game = matchup(tm2, tm1, tm_df, n=n)
             ## game = single_matchup(tm2, tm1, tm_df, True)
-            game = game_sim(season_year, tm2, tm1, today, True, 101)
+            if modeltype == 'Simulation':
+                game = game_sim(season_year, tm2, tm1, today, True, 101)
+            elif modeltype == 'Model':
+                game = single_game_model(
+                    data_seasons=[season_year],
+                    today=today,
+                    matchup=f"{tm2} vs. {tm1}",
+                )[3]
 
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
@@ -288,7 +297,7 @@ def round_32(tm_df, winner64_df, n):
     return winner_df
 
 
-def interactive_round_32(season_year, today, winner64_df):
+def interactive_round_32(season_year, today, modeltype, winner64_df):
 
     # Matchups (within regions)
     #   1/16 vs. 8/9
@@ -328,8 +337,14 @@ def interactive_round_32(season_year, today, winner64_df):
             logger.info(f"{region}: {tm2} vs. {tm1}")
             ## game = matchup(tm2, tm1, tm_df, n=n)
             ## game = single_matchup(tm2, tm1, tm_df, True)
-            game = game_sim(season_year, tm2, tm1, today, True, 101)
-
+            if modeltype == 'Simulation':
+                game = game_sim(season_year, tm2, tm1, today, True, 101)
+            elif modeltype == 'Model':
+                game = single_game_model(
+                    data_seasons=[season_year],
+                    today=today,
+                    matchup=f"{tm2} vs. {tm1}",
+                )[3]
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
                 print(
@@ -414,7 +429,7 @@ def sweet_16(tm_df, winner32_df, n):
     return winner_df
 
 
-def interactive_sweet_16(season_year, today, winner32_df):
+def interactive_sweet_16(season_year, today, modeltype, winner32_df):
 
     # Sweet Sixteen (within regions)
     #   1/16/8/9 vs. 2/15/7/10
@@ -452,8 +467,15 @@ def interactive_sweet_16(season_year, today, winner32_df):
             logger.info(f"{region}: {tm2} vs. {tm1}")
             ## game = matchup(tm2, tm1, tm_df, n=n)
             ## game = single_matchup(tm2, tm1, tm_df, True)
-            game = game_sim(season_year, tm2, tm1, today, True, 101)
-
+            if modeltype == "Simulation":
+                game = game_sim(season_year, tm2, tm1, today, True, 101)
+            elif modeltype == "Model":
+                game = single_game_model(
+                    data_seasons=[season_year],
+                    today=today,
+                    matchup=f"{tm2} vs. {tm1}",
+                )[3]
+            
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
                 print(
@@ -537,7 +559,7 @@ def elite_8(tm_df, winner16_df, n):
     return winner_df
 
 
-def interactive_elite_8(season_year, today, winner16_df):
+def interactive_elite_8(season_year, today, modeltype, winner16_df):
 
     # Elite Eight (within regions)
     # Region Finals
@@ -574,8 +596,15 @@ def interactive_elite_8(season_year, today, winner16_df):
             logger.info(f"{region}: {tm2} vs. {tm1}")
             ## game = matchup(tm2, tm1, tm_df, n=n)
             ## game = single_matchup(tm2, tm1, tm_df, True)
-            game = game_sim(season_year, tm2, tm1, today, True, 101)
-
+            if modeltype == "Simulation":
+                game = game_sim(season_year, tm2, tm1, today, True, 101)
+            elif modeltype == "Model":
+                game = single_game_model(
+                    data_seasons=[season_year],
+                    today=today,
+                    matchup=f"{tm2} vs. {tm1}",
+                )[3]
+            
             # find winner
             if game["Win Prob."][0] > game["Win Prob."][1]:
                 print(
@@ -666,7 +695,7 @@ def final_4(tm_df, winner8_df, n):
     return winner_df
 
 
-def interactive_final_4(season_year, today, winner8_df):
+def interactive_final_4(season_year, today, modeltype, winner8_df):
 
     # Final Four
 
@@ -702,8 +731,15 @@ def interactive_final_4(season_year, today, winner8_df):
         logger.info(f"Final Four: {tm2} vs. {tm1}")
         ## game = matchup(tm2, tm1, tm_df, n=n)
         ## game = single_matchup(tm2, tm1, tm_df, True)
-        game = game_sim(season_year, tm2, tm1, today, True, 101)
-
+        if modeltype == 'Simulation':
+            game = game_sim(season_year, tm2, tm1, today, True, 101)
+        elif modeltype == 'Model':
+            game = single_game_model(
+                data_seasons=[season_year],
+                today=today,
+                matchup=f"{tm2} vs. {tm1}",
+            )[3]
+    
         # find winner
         if game["Win Prob."][0] > game["Win Prob."][1]:
             print(
@@ -784,7 +820,7 @@ def final_2(tm_df, winner4_df, n):
     return winner_df
 
 
-def interactive_final_2(season_year, today, winner4_df):
+def interactive_final_2(season_year, today, modeltype, winner4_df):
 
     # Championship
 
@@ -820,8 +856,15 @@ def interactive_final_2(season_year, today, winner4_df):
         logger.info(f"Championship: {tm2} vs. {tm1}")
         ## game = matchup(tm2, tm1, tm_df, n=n)
         ## game = single_matchup(tm2, tm1, tm_df, True)
-        game = game_sim(season_year, tm2, tm1, today, True, 101)
-
+        if modeltype == 'Simulation':
+            game = game_sim(season_year, tm2, tm1, today, True, 101)
+        elif modeltype == 'Model':
+            game = single_game_model(
+                data_seasons=[season_year],
+                today=today,
+                matchup=f"{tm2} vs. {tm1}",
+            )[3]
+            
         # find winner
         if game["Win Prob."][0] > game["Win Prob."][1]:
             print(
