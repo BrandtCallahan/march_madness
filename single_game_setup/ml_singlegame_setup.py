@@ -531,6 +531,9 @@ def single_game_model(data_seasons, today, matchup, game_details):
     matchup_data["Postseason Game"] = [game_details["Postseason Game"]]
     matchup_data["NCAA Tourney Game"] = [game_details["NCAA Tourney Game"]]
 
+    # fix empty data in matchup
+    matchup_data = matchup_data.fillna(np.nan)
+    
     """
         Build Out Model
     """
