@@ -8,24 +8,28 @@ import os
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-
-from sklearn.model_selection import train_test_split
 from sklearn.linear_model import (
-    LogisticRegression,
     LinearRegression,
+    LogisticRegression,
+)
+from sklearn.ensemble import (
+    HistGradientBoostingClassifier,
+    HistGradientBoostingRegressor,
 )
 from sklearn.metrics import (
     ConfusionMatrixDisplay,
     confusion_matrix,
-    r2_score,
-    accuracy_score,
     precision_score,
     recall_score,
+    roc_auc_score,
 )
+from sklearn.model_selection import train_test_split
 
 from utils.get_data import *
 from utils.team_dict import *
 from utils.beautiful_soup_helper import *
+
+pd.set_option("future.no_silent_downcasting", True)
 
 
 def gamelog_setup(season, tm_name, gm_date):
@@ -57,6 +61,9 @@ def gamelog_setup(season, tm_name, gm_date):
         )
     ].reset_index(drop=True)
 
+    # add season column
+    team_gamelog["Season"] = season
+
     # set dtypes
     team_gamelog = team_gamelog.astype(
         {
@@ -69,15 +76,15 @@ def gamelog_setup(season, tm_name, gm_date):
             "3P": int,
             "3PA": int,
             "3P%": float,
-            # "2P": int,
-            # "2PA": int,
-            # "2P%": float,
-            # "eFG%": float,
+            "2P": int,
+            "2PA": int,
+            "2P%": float,
+            "eFG%": float,
             "FT": int,
             "FTA": int,
             "FT%": float,
             "ORB": int,
-            # "DRB": int,
+            "DRB": int,
             "TRB": int,
             "AST": int,
             "STL": int,
@@ -90,15 +97,15 @@ def gamelog_setup(season, tm_name, gm_date):
             "Opp 3P": int,
             "Opp 3PA": int,
             "Opp 3P%": float,
-            # "Opp 2P": int,
-            # "Opp 2PA": int,
-            # "Opp 2P%": float,
-            # "Opp eFG%": float,
+            "Opp 2P": int,
+            "Opp 2PA": int,
+            "Opp 2P%": float,
+            "Opp eFG%": float,
             "Opp FT": int,
             "Opp FTA": int,
             "Opp FT%": float,
             "Opp ORB": int,
-            # "Opp DRB": int,
+            "Opp DRB": int,
             "Opp TRB": int,
             "Opp AST": int,
             "Opp STL": int,
@@ -117,6 +124,28 @@ def gamelog_setup(season, tm_name, gm_date):
     # running sum W
     team_gamelog["Total W"] = team_gamelog.groupby(["Tm"])["W/L Flag"].cumsum()
     team_gamelog["Total W%"] = team_gamelog["Total W"] / team_gamelog["G"].astype(int)
+
+    # streaks
+    team_gamelog.loc[(team_gamelog["W/L"] == "L"), "Streak Value"] = -1
+    team_gamelog["Streak Value"] = team_gamelog["Streak Value"].fillna(1)
+
+    team_gamelog["Start Streak"] = team_gamelog["Streak Value"].ne(
+        team_gamelog["Streak Value"].shift()
+    )
+    team_gamelog["Streak Id"] = team_gamelog["Start Streak"].cumsum()
+    team_gamelog["Running Streak"] = team_gamelog.groupby("Streak Id").cumcount() + 1
+
+    # W Streak == +, L Streak == -
+    team_gamelog.loc[team_gamelog["W/L"] == "W", "Streak +/-"] = team_gamelog[
+        "Running Streak"
+    ]
+    team_gamelog.loc[team_gamelog["W/L"] == "L", "Streak +/-"] = (
+        team_gamelog["Running Streak"] * -1
+    )
+    team_gamelog["Streak +/-"] = team_gamelog["Streak +/-"].astype(int)
+    team_gamelog = team_gamelog.drop(
+        columns=["Streak Value", "Start Streak", "Streak Id", "Running Streak"]
+    )
 
     # possessions
     team_gamelog["Poss"] = (
@@ -200,19 +229,23 @@ def gamelog_setup(season, tm_name, gm_date):
         (team_gamelog["Tm Score"] / team_gamelog["Opp Score"]) ** 10.5
     ) / (((team_gamelog["Tm Score"] / team_gamelog["Opp Score"]) ** 10.5) + 1)
 
-    # # flag conference games (regular season)
-    # team_gamelog.loc[(team_gamelog["Game Type"] == "REG (Conf)"), "Conf Game"] = 1
-    # team_gamelog["Conf Game"] = team_gamelog["Conf Game"].fillna(0)
+    # flag conference games (regular season)
+    team_gamelog.loc[(team_gamelog["Game Type"] == "REG (Conf)"), "Conf Game"] = 1
+    team_gamelog["Conf Game"] = team_gamelog["Conf Game"].fillna(0)
 
-    # # rename OT to 0/1 flag
-    # team_gamelog["OT"] = (
-    #     team_gamelog["OT"].replace("OT", 1).replace(pd.NA, 0).astype(int)
-    # )
+    # flag postseason games
+    team_gamelog.loc[
+        ~(team_gamelog["Game Type"].str.contains("REG")), "Postseason Game"
+    ] = 1
+    team_gamelog["Postseason Game"] = team_gamelog["Postseason Game"].fillna(0)
 
     # rename Home/Away/Neutral to 2/1/0
-    team_gamelog["Location"] = (
-        team_gamelog["Location"].replace("@", 1).replace(pd.NA, 2).replace("N", 0)
-    ).astype(int)
+    location_dict = {
+        "@": 1,
+        "N": 0,
+    }
+    team_gamelog["Location"] = (team_gamelog["Location"].map(location_dict)).fillna(2)
+    team_gamelog["Location"] = team_gamelog["Location"].astype(int)
 
     # limit data to only show up to defined date (not including)
     team_gamelog = (
@@ -251,10 +284,11 @@ def rolling_gamedata(season, hm_tm, aw_tm, gm_date):
             # start boxscore stats
             FGpct=("FG%", "median"),
             P3pct=("3P%", "median"),
-            # eFGpct=("eFG%", "median"),
+            P2pct=("2P%", "median"),
+            eFGpct=("eFG%", "median"),
             FTpct=("FT%", "median"),
             ORB=("ORB", "median"),
-            # DRB=("DRB", "median"),
+            DRB=("DRB", "median"),
             TRB=("TRB", "median"),
             AST=("AST", "median"),
             STL=("STL", "median"),
@@ -264,10 +298,11 @@ def rolling_gamedata(season, hm_tm, aw_tm, gm_date):
             # opponent boxscore stats
             OppFGpct=("FG%", "median"),
             OppP3pct=("3P%", "median"),
-            # OppeFGpct=("eFG%", "median"),
+            OppP2pct=("Opp 2P%", "median"),
+            OppeFGpct=("eFG%", "median"),
             OppFTpct=("FT%", "median"),
             OppORB=("ORB", "median"),
-            # OppDRB=("DRB", "median"),
+            OppDRB=("DRB", "median"),
             OppTRB=("TRB", "median"),
             OppAST=("AST", "median"),
             OppSTL=("STL", "median"),
@@ -280,11 +315,14 @@ def rolling_gamedata(season, hm_tm, aw_tm, gm_date):
             columns={
                 "P3pct": "3Ppct",
                 "OppP3pct": "Opp3Ppct",
+                "P2pct": "2Ppct",
+                "OppP2pct": "Opp2Ppct",
             }
         )
     )
     gm_df["TmLuck"] = gm_df["W"] - gm_df["TmLuckW"]
     gm_df["Game Date"] = gm_date
+    gm_df["Season"] = season
 
     # transform gm_df into single line game for game results df
     hm = (
@@ -310,6 +348,7 @@ def season_data(season):
     results_df = pd.read_csv(
         f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season{season}_results.csv",
     )
+    season_df = pd.DataFrame()
 
     # for each result, run rolling_gamedata()
     for n, matchup in enumerate(results_df["Matchup"].tolist()):
@@ -328,9 +367,15 @@ def season_data(season):
                 [
                     "Matchup",
                     "Home Team",
+                    "Home Rk",
                     "Away Team",
+                    "Away Rk",
                     "Home W",
                     "Home Pt Diff",
+                    "Neutral Game",
+                    "Conference Game",
+                    "Postseason Game",
+                    "NCAA Tourney Game",
                 ]
             ],
             how="inner",
@@ -338,7 +383,11 @@ def season_data(season):
             right_on=["Matchup", "Away Team", "Home Team"],
         )
 
-        season_df = pd.concat([season_df, gamelog_stats]).drop_duplicates().reset_index(drop=True)
+        season_df = (
+            pd.concat([season_df, gamelog_stats])
+            .drop_duplicates(subset=["Matchup", "Game Date"])
+            .reset_index(drop=True)
+        )
 
     # save .csv file
     season_df.to_csv(
@@ -349,7 +398,7 @@ def season_data(season):
     return season_df
 
 
-def single_game_model(data_seasons, today, matchup):
+def single_game_model(data_seasons, today, matchup, game_details):
 
     # load up matchup results for training
     matchup_df = pd.DataFrame()
@@ -363,9 +412,40 @@ def single_game_model(data_seasons, today, matchup):
         matchup_df = pd.concat([matchup_df, tmp_df]).reset_index(drop=True)
 
     # make sure only data from before "today"
-    matchup_df = matchup_df[
-        matchup_df["Game Date"].astype("datetime64[ns]") < pd.to_datetime(today)
-    ].reset_index(drop=True)
+    matchup_df = (
+        matchup_df[matchup_df["Game Date"] < pd.to_datetime(today)]
+        .reset_index(drop=True)
+        .rename(columns={"Hm_Season": "Season"})
+        .drop(columns=["Aw_Season"])
+    )
+
+    # seed for NCAA Tourney games
+    ncaa_df = pd.read_csv(
+        f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season_bracketology.csv"
+    )
+    ncaa_df = ncaa_df[ncaa_df["season"].isin(data_seasons)]
+    ncaa_df.loc[ncaa_df["season"].isin(data_seasons), "NCAA Tourney Game"] = 1
+    matchup_df = matchup_df.merge(
+        ncaa_df.rename(
+            columns={
+                "tm": "Aw_Tm",
+                "seed": "Aw_Seed",
+                "season": "Season",
+            }
+        )[["Season", "Aw_Tm", "NCAA Tourney Game", "Aw_Seed"]],
+        how="left",
+        on=["Season", "Aw_Tm", "NCAA Tourney Game"],
+    ).merge(
+        ncaa_df.rename(
+            columns={
+                "tm": "Hm_Tm",
+                "seed": "Hm_Seed",
+                "season": "Season",
+            }
+        )[["Season", "Hm_Tm", "NCAA Tourney Game", "Hm_Seed"]],
+        how="left",
+        on=["Season", "Hm_Tm", "NCAA Tourney Game"],
+    )
 
     # data for the matchup
     hm_tm = matchup.split(" vs. ")[1]
@@ -377,13 +457,131 @@ def single_game_model(data_seasons, today, matchup):
         pd.to_datetime(today),
     )
 
+    # get team ratings
+    tm_ratings = tm_rating(data_seasons[-1], today)
+    aw_tm_rating = (
+        tm_ratings[tm_ratings["Tm"] == aw_tm]
+        .reset_index(drop=True)
+        .rename(
+            columns={
+                "Tm": "Aw_Tm",
+                "Tm Rank": "Aw_Rank",
+            }
+        )
+    )
+    hm_tm_rating = (
+        tm_ratings[tm_ratings["Tm"] == hm_tm]
+        .reset_index(drop=True)
+        .rename(
+            columns={
+                "Tm": "Hm_Tm",
+                "Tm Rank": "Hm_Rank",
+            }
+        )
+    )
+
+    # join to matchup_data
+    matchup_data = matchup_data.merge(
+        aw_tm_rating[["Aw_Tm", "Aw_Rank"]], how="inner", on=["Aw_Tm"]
+    ).merge(hm_tm_rating[["Hm_Tm", "Hm_Rank"]], how="inner", on=["Hm_Tm"])
+    matchup_data = matchup_data.rename(
+        columns={"Hm_Rank": "Home Rk", "Aw_Rank": "Away Rk", "Hm_Season": "Season"}
+    ).drop(columns=["Aw_Season"])
+
+    # if NCAA Tourney game get seed
+    if game_details["NCAA Tourney Game"]:
+        seeding_df = pd.read_csv(
+            f"~/Documents/Python/professional_portfolio/march_madness/csv_files/season_bracketology.csv",
+        )
+        season_seeds = seeding_df[seeding_df["season"] == data_seasons[-1]]
+
+        # away seed
+        aw_seed = (
+            season_seeds[season_seeds["tm"] == aw_tm]
+            .reset_index(drop=True)
+            .rename(
+                columns={
+                    "tm": "Aw_Tm",
+                    "seed": "Aw_Seed",
+                }
+            )
+        )
+        # home seed
+        hm_seed = (
+            season_seeds[season_seeds["tm"] == hm_tm]
+            .reset_index(drop=True)
+            .rename(
+                columns={
+                    "tm": "Hm_Tm",
+                    "seed": "Hm_Seed",
+                }
+            )
+        )
+        # join to matchup_data
+        matchup_data = matchup_data.merge(
+            aw_seed[["Aw_Tm", "Aw_Seed"]], how="inner", on=["Aw_Tm"]
+        ).merge(hm_seed[["Hm_Tm", "Hm_Seed"]], how="inner", on=["Hm_Tm"])
+    else:
+        matchup_data["Aw_Seed"] = pd.NA
+        matchup_data["Hm_Seed"] = pd.NA
+
+    # additional matchup details
+    matchup_data["Neutral Game"] = [game_details["Neutral Game"]]
+    matchup_data["Conference Game"] = [game_details["Conference Game"]]
+    matchup_data["Postseason Game"] = [game_details["Postseason Game"]]
+    matchup_data["NCAA Tourney Game"] = [game_details["NCAA Tourney Game"]]
+
     """
         Build Out Model
     """
 
     model_df = matchup_df.sort_values(by=["Game Date", "Matchup"]).reset_index(
         drop=True
-    )
+    )[
+        [
+            "Aw_Tm",
+            "Aw_W",
+            "Aw_Wpct",
+            "Aw_Poss",
+            "Aw_OppPoss",
+            "Aw_OffEff",
+            "Aw_ShootEff",
+            "Aw_DefEff",
+            "Aw_OppShootEff",
+            "Aw_TmLuckW",
+            "Aw_Pts",
+            "Aw_OppPts",
+            "Aw_TmLuck",
+            "Game Date",
+            "Hm_Tm",
+            "Hm_W",
+            "Hm_Wpct",
+            "Hm_Poss",
+            "Hm_OppPoss",
+            "Hm_OffEff",
+            "Hm_ShootEff",
+            "Hm_DefEff",
+            "Hm_OppShootEff",
+            "Hm_TmLuckW",
+            "Hm_Pts",
+            "Hm_OppPts",
+            "Hm_TmLuck",
+            "Season",
+            "Matchup",
+            "Home Team",
+            "Away Team",
+            "Home W",
+            "Home Pt Diff",
+            "Away Rk",
+            "Home Rk",
+            "Aw_Seed",
+            "Hm_Seed",
+            "Neutral Game",
+            "Conference Game",
+            "Postseason Game",
+            "NCAA Tourney Game",
+        ]
+    ]
 
     """
         Set Target Variables/DFs
@@ -427,44 +625,25 @@ def single_game_model(data_seasons, today, matchup):
 
         # call model with parameters
         if target_variable in ["Home W"]:
-            model = LogisticRegression(
+            model = HistGradientBoostingClassifier(
                 max_iter=1000,
-                solver="newton-cholesky",
+                early_stopping=True,
+                warm_start=True,
                 random_state=14,
             )
         elif target_variable in ["Home Pt Diff"]:
-            model = LinearRegression()
+            model = HistGradientBoostingRegressor(
+                max_iter=1000,
+                early_stopping=True,
+                warm_start=True,
+                random_state=14,
+            )
 
-        logger.info(f"training model")
+        # logger.info(f"training model")
         model.fit(X_train, np.ravel(y_train))
 
-        if target_variable in ["Home W"]:
-            model_coef = model.coef_[0]
-            abs_coef = [abs(model.intercept_[0])]
-            reg_coef = [model.intercept_[0]]
-        else:
-            model_coef = model.coef_
-            abs_coef = [abs(model.intercept_)]
-            reg_coef = [model.intercept_]
-        features = ["intercept"]
-
-        for coef in model_coef:
-            abs_coef += [abs(coef)]
-            reg_coef += [coef]
-
-        for name in model.feature_names_in_:
-            features += [name]
-        model_coef = pd.DataFrame(
-            data={
-                "target variable": target_variable,
-                "feature": features,
-                "coef": reg_coef,
-                "abs_coef": abs_coef,
-            }
-        )
-
         # suppress scientific notation
-        logger.info(f"predicting test set")
+        # logger.info(f"predicting test set")
         np.set_printoptions(suppress=True)
         predictions = model.predict(X_test)
         if target_variable in ["Home W"]:
@@ -490,9 +669,8 @@ def single_game_model(data_seasons, today, matchup):
                 "Home Team",
                 "Away Team",
                 "Home W",
-                f"Predict",
-                f"Predict Probability",
-                # "error",
+                "Predict",
+                "Predict Probability",
             ]
         )
 
@@ -508,11 +686,9 @@ def single_game_model(data_seasons, today, matchup):
         tmp_df["Away Team"] = model_df.iloc[mylist]["Away Team"]
         tmp_df["Home W"] = model_df.iloc[mylist]["Home W"]
 
-        tmp_df[f"Predict"] = w_pred
+        tmp_df["Predict"] = w_pred
         if target_variable in ["Home W"]:
-            tmp_df[f"Predict Probability"] = w_prob
-
-        # tmp_df["Error"] = tmp_df[f"{target_stat}"] - tmp_df[f"Pred. {target_stat}"]
+            tmp_df["Predict Probability"] = w_prob
 
         # model statistics
         if target_variable in ["Home W"]:
@@ -522,6 +698,7 @@ def single_game_model(data_seasons, today, matchup):
                     "R^2",
                     "Recall Score",
                     "Precision Score",
+                    "ROC AUC",
                 ]
             )
             model_stats_df["Target Variable"] = [target_variable]
@@ -532,6 +709,7 @@ def single_game_model(data_seasons, today, matchup):
             model_stats_df["Precision Score"] = [
                 precision_score(y_test, predictions)
             ]  # tp / (tp + fp)
+            model_stats_df["ROC AUC"] = roc_auc_score(y_test, w_prob)
         else:
             model_stats_df = pd.DataFrame(
                 columns=[
@@ -543,7 +721,7 @@ def single_game_model(data_seasons, today, matchup):
             model_stats_df["R^2"] = [model.score(X_test, y_test)]
 
         """
-            Confusion Matrix for Training
+            Confusion Matrix for Train/Test
         """
         # matrix = confusion_matrix(y_test, predictions)
         # matrix_viz = ConfusionMatrixDisplay(confusion_matrix=matrix, display_labels=model.classes_)
@@ -553,10 +731,44 @@ def single_game_model(data_seasons, today, matchup):
         """
             Matchup Prediction (probability of home team winning)
         """
-        logger.info(f"predicting: {matchup_data["Matchup"][0]}")
-        prediction_df = matchup_data.drop(
-            columns=["Aw_Tm", "Hm_Tm", "Matchup", "Game Date"]
-        )
+        logger.info(f"predicting {target_variable}: {matchup_data["Matchup"][0]}")
+        prediction_df = matchup_data[
+            [
+                "Aw_W",
+                "Aw_Wpct",
+                "Aw_Poss",
+                "Aw_OppPoss",
+                "Aw_OffEff",
+                "Aw_ShootEff",
+                "Aw_DefEff",
+                "Aw_OppShootEff",
+                "Aw_TmLuckW",
+                "Aw_Pts",
+                "Aw_OppPts",
+                "Aw_TmLuck",
+                "Hm_W",
+                "Hm_Wpct",
+                "Hm_Poss",
+                "Hm_OppPoss",
+                "Hm_OffEff",
+                "Hm_ShootEff",
+                "Hm_DefEff",
+                "Hm_OppShootEff",
+                "Hm_TmLuckW",
+                "Hm_Pts",
+                "Hm_OppPts",
+                "Hm_TmLuck",
+                "Season",
+                "Away Rk",
+                "Home Rk",
+                "Aw_Seed",
+                "Hm_Seed",
+                "Neutral Game",
+                "Conference Game",
+                "Postseason Game",
+                "NCAA Tourney Game",
+            ]
+        ]
         # prediction_df = prediction_df[limit_X_train.feature.tolist()]
 
         if target_variable in ["Home W"]:
@@ -618,11 +830,8 @@ def single_game_model(data_seasons, today, matchup):
                 pred_df[["Matchup", "Predict"]], how="inner", on="Matchup"
             ).rename(columns={"Predict": f"{target_variable}"})
 
-        # concat model_stats_df & model_coef
+        # concat model_stats_df
         final_model_stats = pd.concat([final_model_stats, model_stats_df]).reset_index(
-            drop=True
-        )
-        final_model_coef = pd.concat([final_model_coef, model_coef]).reset_index(
             drop=True
         )
 
