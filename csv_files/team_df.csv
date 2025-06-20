@@ -134,11 +134,11 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2023,Boston University,Boston University,boston-university,Patriot League,Patriot,Boston University Terriers,#CC0000,#FFFFFF
 2024,Boston University,Boston University,boston-university,Patriot League,Patriot,Boston University Terriers,#CC0000,#FFFFFF
 2025,Boston University,Boston University,boston-university,Patriot League,Patriot,Boston University Terriers,#CC0000,#FFFFFF
-2021,Bowling Green State,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
-2022,Bowling Green State,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
-2023,Bowling Green State,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
-2024,Bowling Green State,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
-2025,Bowling Green State,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
+2021,Bowling Green,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
+2022,Bowling Green,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
+2023,Bowling Green,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
+2024,Bowling Green,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
+2025,Bowling Green,Bowling Green State,bowling-green-state,Mid-American Conference,MAC,Bowling Green,#4F2C1D,#FE5000
 2021,Bradley,Bradley,bradley,Missouri Valley Conference,MVC,Bradley,#A50000,#999999
 2022,Bradley,Bradley,bradley,Missouri Valley Conference,MVC,Bradley,#A50000,#999999
 2023,Bradley,Bradley,bradley,Missouri Valley Conference,MVC,Bradley,#A50000,#999999
@@ -169,11 +169,11 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2023,Butler,Butler,butler,Big East Conference,Big East,Butler,#13294B,#747678
 2024,Butler,Butler,butler,Big East Conference,Big East,Butler,#13294B,#747678
 2025,Butler,Butler,butler,Big East Conference,Big East,Butler,#13294B,#747678
-2021,BYU,BYU,brigham-young,West Coast Conference,WCC,BYU,#002255,#C5AF7D
-2022,BYU,BYU,brigham-young,West Coast Conference,WCC,BYU,#002255,#C5AF7D
-2024,BYU,BYU,brigham-young,Big 12,Big 12,BYU,#002255,#C5AF7D
-2025,BYU,BYU,brigham-young,Big 12,Big 12,BYU,#002255,#C5AF7D
-2023,BYU,BYU,brigham-young,West Coast Conference,WCC,BYU,#002255,#C5AF7D
+2021,Brigham Young,BYU,brigham-young,West Coast Conference,WCC,BYU,#002255,#C5AF7D
+2022,Brigham Young,BYU,brigham-young,West Coast Conference,WCC,BYU,#002255,#C5AF7D
+2024,Brigham Young,BYU,brigham-young,Big 12,Big 12,BYU,#002255,#C5AF7D
+2025,Brigham Young,BYU,brigham-young,Big 12,Big 12,BYU,#002255,#C5AF7D
+2023,Brigham Young,BYU,brigham-young,West Coast Conference,WCC,BYU,#002255,#C5AF7D
 2021,Cal Poly,Cal Poly,cal-poly,Big West Conference,Big West,Cal Poly,#003831,#FFE395
 2022,Cal Poly,Cal Poly,cal-poly,Big West Conference,Big West,Cal Poly,#003831,#FFE395
 2023,Cal Poly,Cal Poly,cal-poly,Big West Conference,Big West,Cal Poly,#003831,#FFE395
@@ -384,10 +384,10 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2023,East Tennessee State,ETSU,east-tennessee-state,Southern Conference,Southern,ETSU,#041E42,#FFC72C
 2024,East Tennessee State,ETSU,east-tennessee-state,Southern Conference,Southern,ETSU,#041E42,#FFC72C
 2025,East Tennessee State,ETSU,east-tennessee-state,Southern Conference,Southern,ETSU,#041E42,#FFC72C
-2021,East Texas A&M,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
-2022,East Texas A&M,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
-2023,East Texas A&M,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
-2024,East Texas A&M,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
+2021,Texas A&M-Commerce,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
+2022,Texas A&M-Commerce,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
+2023,Texas A&M-Commerce,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
+2024,Texas A&M-Commerce,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
 2025,East Texas A&M,East Texas A&M,texas-am-commerce,Southland Conference,Southland,,#00386C,#FFC333
 2021,Eastern Illinois,Eastern Illinois,eastern-illinois,Ohio Valley Conference,OVC,Eastern Illinois Panthers,#919295,#00205B
 2022,Eastern Illinois,Eastern Illinois,eastern-illinois,Ohio Valley Conference,OVC,Eastern Illinois Panthers,#919295,#00205B
@@ -424,9 +424,9 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2023,Fairfield,Fairfield,fairfield,Metro Atlantic Athletic Conference,MAAC,Fairfield,#C8102E,#A2AAAD
 2024,Fairfield,Fairfield,fairfield,Metro Atlantic Athletic Conference,MAAC,Fairfield,#C8102E,#A2AAAD
 2025,Fairfield,Fairfield,fairfield,Metro Atlantic Athletic Conference,MAAC,Fairfield,#C8102E,#A2AAAD
-2021,FDU,FDU,fairleigh-dickinson,Northeast Conference,Northeast,F. Dickinson Knights,#72293C,#28334A
-2022,FDU,FDU,fairleigh-dickinson,Northeast Conference,Northeast,F. Dickinson Knights,#72293C,#28334A
-2023,FDU,FDU,fairleigh-dickinson,Northeast Conference,Northeast,F. Dickinson Knights,#72293C,#28334A
+2021,Fairleigh Dickinson,FDU,fairleigh-dickinson,Northeast Conference,Northeast,F. Dickinson Knights,#72293C,#28334A
+2022,Fairleigh Dickinson,FDU,fairleigh-dickinson,Northeast Conference,Northeast,F. Dickinson Knights,#72293C,#28334A
+2023,Fairleigh Dickinson,FDU,fairleigh-dickinson,Northeast Conference,Northeast,F. Dickinson Knights,#72293C,#28334A
 2024,FDU,FDU,fairleigh-dickinson,Northeast Conference,Northeast,F. Dickinson Knights,#72293C,#28334A
 2025,FDU,FDU,fairleigh-dickinson,Northeast Conference,Northeast,F. Dickinson Knights,#72293C,#28334A
 2021,Florida,Florida,florida,Southeastern Conference,SEC,Florida,#FA4616,#0021A5
@@ -637,10 +637,10 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2023,Iowa State,Iowa State,iowa-state,Big 12,Big 12,Iowa State,#C8102E,#F1BE48
 2024,Iowa State,Iowa State,iowa-state,Big 12,Big 12,Iowa State,#C8102E,#F1BE48
 2025,Iowa State,Iowa State,iowa-state,Big 12,Big 12,Iowa State,#C8102E,#F1BE48
-2021,IU Indy,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
-2022,IU Indy,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
-2023,IU Indy,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
-2024,IU Indy,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
+2021,IUPUI,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
+2022,IUPUI,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
+2023,IUPUI,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
+2024,IUPUI,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
 2025,IU Indy,IU Indianapolis,iupui,Horizon League,Horizon,IUPUI,#9D2235,#DFD1A7
 2021,Jackson State,Jackson State,jackson-state,Southwest Athletic Conference,SWAC,J. State Gamecocks,#CC0000,#FFFFFF
 2022,Jackson State,Jackson State,jackson-state,Southwest Athletic Conference,SWAC,J. State Gamecocks,#CC0000,#FFFFFF
@@ -1189,11 +1189,11 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2023,Portland State,Portland State,portland-state,Big Sky Conference,Big Sky,Portland State,#154734,#154734
 2024,Portland State,Portland State,portland-state,Big Sky Conference,Big Sky,Portland State,#154734,#154734
 2025,Portland State,Portland State,portland-state,Big Sky Conference,Big Sky,Portland State,#154734,#154734
-2021,Prairie View,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
-2022,Prairie View,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
-2023,Prairie View,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
-2024,Prairie View,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
-2025,Prairie View,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
+2021,Prairie View A&M,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
+2022,Prairie View A&M,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
+2023,Prairie View A&M,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
+2024,Prairie View A&M,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
+2025,Prairie View A&M,Prairie View,prairie-view,Southwest Athletic Conference,SWAC,Prairie View Panthers,#330066,#FFCC33
 2021,Presbyterian,Presbyterian,presbyterian,Big South Conference,Big South,Presbyterian Blue Hose,#0060A9,#9D2235
 2022,Presbyterian,Presbyterian,presbyterian,Big South Conference,Big South,Presbyterian Blue Hose,#0060A9,#9D2235
 2023,Presbyterian,Presbyterian,presbyterian,Big South Conference,Big South,Presbyterian Blue Hose,#0060A9,#9D2235
@@ -1299,11 +1299,11 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2023,Saint Peter's,St. Peter's,saint-peters,Metro Atlantic Athletic Conference,MAAC,St. Peter’s,#003C71,#0072CE
 2024,Saint Peter's,St. Peter's,saint-peters,Metro Atlantic Athletic Conference,MAAC,St. Peter’s,#003C71,#0072CE
 2025,Saint Peter's,St. Peter's,saint-peters,Metro Atlantic Athletic Conference,MAAC,St. Peter’s,#003C71,#0072CE
-2021,Sam Houston,Sam Houston,sam-houston-state,Western Athletic Conference,WAC,,#FE5100,#FFFFFF
-2022,Sam Houston,Sam Houston,sam-houston-state,Western Athletic Conference,WAC,,#FE5100,#FFFFFF
-2024,Sam Houston,Sam Houston,sam-houston-state,Conference USA,CUSA,,#FE5100,#FFFFFF
-2025,Sam Houston,Sam Houston,sam-houston-state,Conference USA,CUSA,,#FE5100,#FFFFFF
-2023,Sam Houston,Sam Houston,sam-houston-state,Western Athletic Conference,WAC,,#FE5100,#FFFFFF
+2021,Sam Houston State,Sam Houston,sam-houston-state,Western Athletic Conference,WAC,,#FE5100,#FFFFFF
+2022,Sam Houston State,Sam Houston,sam-houston-state,Western Athletic Conference,WAC,,#FE5100,#FFFFFF
+2024,Sam Houston State,Sam Houston,sam-houston-state,Conference USA,CUSA,,#FE5100,#FFFFFF
+2025,Sam Houston State,Sam Houston,sam-houston-state,Conference USA,CUSA,,#FE5100,#FFFFFF
+2023,Sam Houston State,Sam Houston,sam-houston-state,Western Athletic Conference,WAC,,#FE5100,#FFFFFF
 2021,Samford,Samford,samford,Southern Conference,Southern,Samford,#002649,#C4161D
 2022,Samford,Samford,samford,Southern Conference,Southern,Samford,#002649,#C4161D
 2023,Samford,Samford,samford,Southern Conference,Southern,Samford,#002649,#C4161D
@@ -1511,11 +1511,11 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2023,Tennessee Tech,Tennessee Tech,tennessee-tech,Ohio Valley Conference,OVC,Tennessee Golden Eagles,#4F2984,#FFDD00
 2024,Tennessee Tech,Tennessee Tech,tennessee-tech,Ohio Valley Conference,OVC,Tennessee Golden Eagles,#4F2984,#FFDD00
 2025,Tennessee Tech,Tennessee Tech,tennessee-tech,Ohio Valley Conference,OVC,Tennessee Golden Eagles,#4F2984,#FFDD00
-2021,Tennessee-Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
-2022,Tennessee-Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
-2023,Tennessee-Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
-2024,Tennessee-Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
-2025,Tennessee-Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
+2021,UT Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
+2022,UT Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
+2023,UT Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
+2024,UT Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
+2025,UT Martin,UT-Martin,tennessee-martin,Ohio Valley Conference,OVC,UT Martin Skyhawks,#F79728,#002A5B
 2021,Texas,Texas,texas,Big 12,Big 12,Texas,#BF5700,#333F48
 2022,Texas,Texas,texas,Big 12,Big 12,Texas,#BF5700,#333F48
 2023,Texas,Texas,texas,Big 12,Big 12,Texas,#BF5700,#333F48
@@ -1549,6 +1549,8 @@ Season,Tm Name,Gamelog Name,Ref Name,Conference,Conference Abbr,Hex Code Name,Tm
 2021,Texas Tech,Texas Tech,texas-tech,Big 12,Big 12,Texas Tech,#CC0000,#000000
 2022,Texas Tech,Texas Tech,texas-tech,Big 12,Big 12,Texas Tech,#CC0000,#000000
 2025,Texas-Rio Grande Valley,Texas-Rio Grande Valley,texas-pan-american,Southland Conference,Southland,UTRGV,#FFA300,#0C2340
+2021,Texas-Rio Grande Valley,Texas-Rio Grande Valley,texas-pan-american,Western Athletic Conference,WAC,UTRGV,#FFA300,#0C2340
+2022,Texas-Rio Grande Valley,Texas-Rio Grande Valley,texas-pan-american,Western Athletic Conference,WAC,UTRGV,#FFA300,#0C2340
 2023,Texas-Rio Grande Valley,Texas-Rio Grande Valley,texas-pan-american,Western Athletic Conference,WAC,UTRGV,#FFA300,#0C2340
 2024,Texas-Rio Grande Valley,Texas-Rio Grande Valley,texas-pan-american,Western Athletic Conference,WAC,UTRGV,#FFA300,#0C2340
 2021,The Citadel,The Citadel,citadel,Southern Conference,Southern,The Citadel,#3975B7,#1F3A60
